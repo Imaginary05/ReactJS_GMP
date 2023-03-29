@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Counter from './components/Counter';
+import SearchForm from './components/SearchForm/SearchForm';
+import GenreSelect from './components/GenreSelect/GenreSelect';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const initialCount = 10;
+
+    return (
+        <div className="appContainer">
+            <header className='header'>
+                <SearchForm></SearchForm>
+            </header>
+
+            <main className='main'>
+                <div className='filters'>
+                    <GenreSelect></GenreSelect>
+                </div>
+                <hr/>
+                <div className='movieList'>
+
+                </div>
+            </main>
+
+            <footer>
+                <Counter count={initialCount}></Counter>
+            </footer>
+        </div>
+    );
 }
 
 export default App;

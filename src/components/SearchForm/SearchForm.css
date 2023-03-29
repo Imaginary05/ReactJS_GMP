@@ -1,0 +1,20 @@
+.searchComponent {
+    display: flex;
+    flex-direction: column;
+    background-image: url("../../../assets/Bitmap.png");
+    width: 100%;
+    height: 100%;
+    padding: 100px 150px;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+}
+
+.searchText {
+    padding: 40px 0;
+    font-size: 2.5rem;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+}
