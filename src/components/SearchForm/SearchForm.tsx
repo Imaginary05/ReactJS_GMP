@@ -13,23 +13,32 @@
 import './SearchForm.css';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
+import React, { useState } from 'react';
 
-export default function SearchForm() {
-    let inputValue: string;
+interface SearchFormProps {
+    initialQuery: string;
+    onSearch: (query: string) => void;
+}
 
-    const inputChanged = (value: string) => {
-        inputValue = value;
-    }
+export const SearchForm: React.FC<SearchFormProps> = ({
+    initialQuery,
+    onSearch,
+}) => {
+    const [query, setQuery] = useState(initialQuery);
 
-    const keyPress = (event: KeyboardEvent) => {
+    const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            search()
+            handleSearch();
         }
-    }
+    };
 
-    const search = () => {
-        console.log(inputValue);
-    }
+    const handleSearch = () => {
+        onSearch(query);
+    };
 
     return (
        <div className='searchComponent'>
@@ -40,12 +49,12 @@ export default function SearchForm() {
                <Input
                    value=''
                    placeholder="What do you want to watch?"
-                   onChange={inputChanged}
-                   onKeyUp={keyPress}
+                   onChange={handleQueryChange}
+                   onKeyUp={handleKeyDown}
                ></Input>
                <Button
                    title="Search"
-                   onClick={search}
+                   onClick={handleSearch}
                ></Button>
            </div>
        </div>

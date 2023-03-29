@@ -2,7 +2,7 @@ import {
     Component,
     createElement
 } from 'react';
-import Button from '../common/Button/Button';
+import Button from '../../common/Button/Button';
 
 /*
 * A component that renders a numeric value and two buttons:

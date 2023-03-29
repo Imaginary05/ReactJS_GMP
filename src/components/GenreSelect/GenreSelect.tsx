@@ -11,16 +11,19 @@
 * Pass respective genre name to the callback arguments.
 * */
 import './GenreSelect.css'
-import { useState } from 'react';
-import { genres } from '../../genres-list';
+import React from 'react';
 
-export default function GenreSelect() {
-    const [selectedGenreID, setSelectedGenreID] = useState<number>();
+interface GenreSelectProps {
+    genres: string[];
+    selectedGenre: string;
+    onSelect: (genre: string) => void;
+}
 
-    const select = (id: number) => {
-        setSelectedGenreID(id);
-        console.log(selectedGenreID);
-    }
+export const GenreSelect: React.FC<GenreSelectProps> = ({
+    genres,
+    selectedGenre,
+    onSelect,
+}) => {
 
     return (
         <div className='genres'>
@@ -28,15 +31,15 @@ export default function GenreSelect() {
                 genres.map((genre) =>
                     <div
                         className='genreContainer'
-                        key={`${genre.id}${genre.title}`}
+                        key={genre}
                     >
                         <button
                             className='genre'
-                            onClick={() => select(genre.id)}
+                            onClick={() => onSelect(genre)}
                         >
-                            {genre.title.toUpperCase()}
+                            {genre.toUpperCase()}
                         </button>
-                        <hr className={`genreSelection ${selectedGenreID === genre.id || genre.selected ? 'selected' : ''}`}/>
+                        <hr className={`genreSelection ${genre === selectedGenre ? 'selected' : ''}`}/>
                     </div>
                 )
             }
