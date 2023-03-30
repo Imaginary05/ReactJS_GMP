@@ -16,7 +16,7 @@ export default class Counter extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            count: props.count
+            count: props.initialCount
         }
     }
 

@@ -34,12 +34,11 @@ export const GenreSelect: React.FC<GenreSelectProps> = ({
                         key={genre}
                     >
                         <button
-                            className='genre'
+                            className={`genre${genre === selectedGenre ? ' selected' : ''}`}
                             onClick={() => onSelect(genre)}
                         >
                             {genre.toUpperCase()}
                         </button>
-                        <hr className={`genreSelection ${genre === selectedGenre ? 'selected' : ''}`}/>
                     </div>
                 )
             }

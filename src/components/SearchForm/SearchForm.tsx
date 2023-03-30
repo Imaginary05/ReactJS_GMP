@@ -26,11 +26,11 @@ export const SearchForm: React.FC<SearchFormProps> = ({
 }) => {
     const [query, setQuery] = useState(initialQuery);
 
-    const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(event.target.value);
+    const handleQueryChange = (value: string) => {
+        setQuery(value);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
@@ -47,10 +47,10 @@ export const SearchForm: React.FC<SearchFormProps> = ({
            </div>
            <div className='searchForm'>
                <Input
-                   value=''
+                   value={initialQuery}
                    placeholder="What do you want to watch?"
                    onChange={handleQueryChange}
-                   onKeyUp={handleKeyDown}
+                   onKeyUp={handleKeyUp}
                ></Input>
                <Button
                    title="Search"
