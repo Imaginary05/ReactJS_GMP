@@ -10,7 +10,7 @@ export default function Button(props) {
             onClick={props.onClick}
             key={props.id}
         >
-            {props.title.toUpperCase()}
+            {props.title}
         </button>
     );
 }

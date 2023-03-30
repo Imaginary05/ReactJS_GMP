@@ -53,7 +53,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
                    onKeyUp={handleKeyUp}
                ></Input>
                <Button
-                   title="Search"
+                   title={'Search'.toUpperCase()}
                    onClick={handleSearch}
                ></Button>
            </div>
