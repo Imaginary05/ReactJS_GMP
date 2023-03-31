@@ -4,7 +4,7 @@
 // and passes correct genre in arguments
 import { GenreSelect } from './GenreSelect';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { genres } from '../../genres-list';
+import { genres } from '../../data/genres-list';
 
 describe('GenreSelect', () => {
     it('renders all genres passed in props', () => {

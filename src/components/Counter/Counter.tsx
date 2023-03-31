@@ -11,9 +11,13 @@ import Button from '../../common/Button/Button';
 * The component should be written using EcmaScript classes syntax,
 * the `render` method should use `React.createElement` API (without JSX).
 * */
+export type CounterProps = {
+    initialCount: number;
+};
+
 export default class Counter extends Component<any, any> {
 
-    constructor(props: any) {
+    constructor(props: CounterProps) {
         super(props);
         this.state = {
             count: props.initialCount

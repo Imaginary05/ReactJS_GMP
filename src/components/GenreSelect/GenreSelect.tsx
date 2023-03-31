@@ -13,13 +13,13 @@
 import './GenreSelect.css'
 import React from 'react';
 
-interface GenreSelectProps {
+export interface GenreSelectProps {
     genres: string[];
     selectedGenre: string;
     onSelect: (genre: string) => void;
 }
 
-export const GenreSelect: React.FC<GenreSelectProps> = ({
+const GenreSelect: React.FC<GenreSelectProps> = ({
     genres,
     selectedGenre,
     onSelect,
@@ -45,3 +45,5 @@ export const GenreSelect: React.FC<GenreSelectProps> = ({
         </div>
     )
 }
+
+export default GenreSelect;
