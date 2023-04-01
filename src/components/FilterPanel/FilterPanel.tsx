@@ -3,12 +3,18 @@ import GenreSelect from '../GenreSelect/GenreSelect';
 import { genres } from '../../data/genres-list';
 import SortControl from '../SortControl/SortControl';
 import './FilterPanel.css';
+import { options } from '../../data/sort-options';
 
 const FilterPanel: React.FC = () => {
     const [selectedGenre, setSelectedGenre] = useState(genres[0]);
+    const [selectedOption, setSelectedOption] = useState(options[0]);
 
     const handleSelectGenre = (genre: string) => {
         setSelectedGenre(genre);
+    };
+
+    const handleSelectedOption = (genre: string) => {
+        setSelectedOption(genre);
     };
 
     return (
@@ -20,8 +26,9 @@ const FilterPanel: React.FC = () => {
                     onSelect={handleSelectGenre}
                 ></GenreSelect>
                 <SortControl
-                    selectedOption=''
-                    onOptionChange={() => {}}
+                    options={options}
+                    selectedOption={selectedOption}
+                    onOptionChange={handleSelectedOption}
                 ></SortControl>
             </nav>
             <hr/>
