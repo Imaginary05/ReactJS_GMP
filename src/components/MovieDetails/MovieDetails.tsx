@@ -34,6 +34,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = (
                     <div className="movie-details__rating">{movie.rating}</div>
                     <div className='mdClear'>
                         <MdClear
+                            data-testid='close-details'
                             onClick={handleClose}
                         ></MdClear>
                     </div>
