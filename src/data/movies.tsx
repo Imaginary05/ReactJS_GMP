@@ -8,6 +8,9 @@ export const movies: Movie[] = [
         posterUrl: 'assets/poster1.png',
         releaseYear: '2020',
         genres: [genres[0]],
+        duration: 80,
+        rating: 8.5,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
     },
     {
         id: 1,
@@ -15,6 +18,9 @@ export const movies: Movie[] = [
         posterUrl: '../../../assets/poster2.png',
         releaseYear: '2020',
         genres: [genres[1]],
+        duration: 90,
+        rating: 7.5,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
     },
     {
         id: 2,
@@ -22,6 +28,9 @@ export const movies: Movie[] = [
         posterUrl: '../../../assets/poster3.png',
         releaseYear: '2020',
         genres: [genres[2]],
+        duration: 85,
+        rating: 6,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
     },
     {
         id: 3,
@@ -29,6 +38,9 @@ export const movies: Movie[] = [
         posterUrl: '../../../assets/poster4.png',
         releaseYear: '2020',
         genres: [genres[3]],
+        duration: 65,
+        rating: 9.7,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
     },
     {
         id: 4,
@@ -36,5 +48,8 @@ export const movies: Movie[] = [
         posterUrl: '../../../assets/poster5.png',
         releaseYear: '2020',
         genres: [genres[4]],
+        duration: 99,
+        rating: 8.3,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
     },
 ];

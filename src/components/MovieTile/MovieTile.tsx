@@ -11,6 +11,9 @@ export interface Movie {
     posterUrl: string;
     releaseYear: string;
     genres: Array<string>;
+    duration: number;
+    rating: number;
+    description: string;
 }
 
 export interface MovieTileProps {
@@ -43,13 +46,13 @@ const MovieTile: React.FC<MovieTileProps> = ({
     };
 
     return (
-        <div className="movie-tile">
+        <div className="movie-tile" onClick={handleTileClick}>
             <div className="movie-tile-image">
                 <img src={movie.posterUrl} alt={movie.title} />
             </div>
             <div className="movie-tile-details">
                 <div className='movie-tile-details-block'>
-                    <div className="movie-tile-title" onClick={handleTileClick}>
+                    <div className="movie-tile-title">
                         {movie.title}
                     </div>
                     <div className="movie-tile-release-date">{movie.releaseYear}</div>
