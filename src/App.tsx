@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Counter from './components/Counter/Counter';
+import { SearchForm } from './components/SearchForm/SearchForm';
+import { GenreSelect } from './components/GenreSelect/GenreSelect';
+import { genres } from './genres-list';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const initialCount = 10;
+
+    const handleSearch = (query: string) => {
+        console.log(`Searching for ${query}`);
+    };
+
+    const [selectedGenre, setSelectedGenre] = useState(genres[0]);
+
+    const handleSelectGenre = (genre: string) => {
+        setSelectedGenre(genre);
+    };
+
+    return (
+        <div className="appContainer">
+            <header className='header'>
+                <SearchForm
+                    initialQuery=''
+                    onSearch={handleSearch}
+                ></SearchForm>
+            </header>
+
+            <main className='main'>
+                <div className='filters'>
+                    <GenreSelect
+                        genres={genres}
+                        selectedGenre={selectedGenre}
+                        onSelect={handleSelectGenre}
+                    ></GenreSelect>
+                </div>
+                <hr/>
+                <div className='movieList'>
+
+                </div>
+            </main>
+
+            <footer>
+                <Counter count={initialCount}></Counter>
+            </footer>
+        </div>
+    );
 }
 
 export default App;
