@@ -42,7 +42,7 @@ function App() {
             </main>
 
             <footer>
-                <Counter count={initialCount}></Counter>
+                <Counter initialCount={initialCount}></Counter>
             </footer>
         </div>
     );

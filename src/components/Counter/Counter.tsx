@@ -16,7 +16,7 @@ export default class Counter extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            count: props.count
+            count: props.initialCount
         }
     }
 
@@ -39,7 +39,12 @@ export default class Counter extends Component<any, any> {
                 className: 'counter'
             },
             [
-                `Times clicked ${this.state.count}`,
+                createElement(
+                    'p',
+                    null,
+                    "Count: ",
+                    this.state.count,
+                ),
                 createElement(Button, {
                     id: 'increment',
                     title: 'Increment',
