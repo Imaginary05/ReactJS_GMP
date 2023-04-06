@@ -1,0 +1,8 @@
+.navigation {
+    margin: 0 60px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,5 +1,13 @@
+body {
+  font-family: 'Montserrat', serif;
+}
+
 hr {
   margin-top: -2px;
+}
+
+main button {
+  color: white;
 }
 
 .appContainer {
@@ -7,7 +15,7 @@ hr {
   flex-direction: column;
   background: #232323;
   color: white;
-  height: 100vh;
+  height: 100%;
 }
 
 .header {
@@ -21,5 +29,5 @@ hr {
 }
 
 .main {
-  padding: 60px;
+  margin-top: 30px;
 }

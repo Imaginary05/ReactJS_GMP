@@ -15,12 +15,12 @@ import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import React, { useState } from 'react';
 
-interface SearchFormProps {
+export interface SearchFormProps {
     initialQuery: string;
     onSearch: (query: string) => void;
 }
 
-export const SearchForm: React.FC<SearchFormProps> = ({
+const SearchForm: React.FC<SearchFormProps> = ({
     initialQuery,
     onSearch,
 }) => {
@@ -60,3 +60,5 @@ export const SearchForm: React.FC<SearchFormProps> = ({
        </div>
     )
 }
+
+export default SearchForm;

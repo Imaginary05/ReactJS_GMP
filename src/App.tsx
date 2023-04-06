@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import Counter from './components/Counter/Counter';
-import { SearchForm } from './components/SearchForm/SearchForm';
-import { GenreSelect } from './components/GenreSelect/GenreSelect';
-import { genres } from './genres-list';
+import SearchForm from './components/SearchForm/SearchForm';
+import FilterPanel from './components/FilterPanel/FilterPanel';
+import MovieListPage from './components/MovieListPage/MovieListPage';
 
 function App() {
-    const initialCount = 10;
-
     const handleSearch = (query: string) => {
         console.log(`Searching for ${query}`);
-    };
-
-    const [selectedGenre, setSelectedGenre] = useState(genres[0]);
-
-    const handleSelectGenre = (genre: string) => {
-        setSelectedGenre(genre);
     };
 
     return (
@@ -28,21 +19,12 @@ function App() {
             </header>
 
             <main className='main'>
-                <div className='filters'>
-                    <GenreSelect
-                        genres={genres}
-                        selectedGenre={selectedGenre}
-                        onSelect={handleSelectGenre}
-                    ></GenreSelect>
-                </div>
-                <hr/>
-                <div className='movieList'>
-
-                </div>
+                <FilterPanel></FilterPanel>
+                <MovieListPage></MovieListPage>
             </main>
 
             <footer>
-                <Counter initialCount={initialCount}></Counter>
+
             </footer>
         </div>
     );
