@@ -4,7 +4,7 @@ import {
     Story
 } from '@storybook/react';
 import { useState } from 'react';
-import { genres } from '../../data/genres-list';
+import { genres } from '../../../data/genres-list';
 
 export default {
     title: "Components/GenreSelect",

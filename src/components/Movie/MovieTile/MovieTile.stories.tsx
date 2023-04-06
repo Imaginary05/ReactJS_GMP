@@ -22,7 +22,7 @@ Default.args = {
     movie: {
         id: 0,
         title: 'Example Movie',
-        posterUrl: 'https://example.com/movie-poster.jpg',
+        posterUrl: 'assets/poster1.png',
         releaseYear: '2022',
         genres: ['Action', 'Thriller'],
         duration: 80,
@@ -39,7 +39,7 @@ NoGenres.args = {
     movie: {
         id: 1,
         title: 'Example Movie',
-        posterUrl: 'https://example.com/movie-poster.jpg',
+        posterUrl: 'assets/poster1.png',
         releaseYear: '2022',
         genres: [],
         duration: 80,

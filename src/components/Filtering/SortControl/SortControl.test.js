@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import SortControl from "./SortControl";
-import { options } from '../../data/sort-options';
+import { options } from '../../../data/sort-options';
 
 describe("SortControl", () => {
     const onChangeMock = jest.fn();

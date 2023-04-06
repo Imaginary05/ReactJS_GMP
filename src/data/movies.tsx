@@ -1,4 +1,4 @@
-import { Movie } from '../components/MovieTile/MovieTile';
+import { Movie } from '../components/Movie/MovieTile/MovieTile';
 import { genres } from './genres-list';
 
 export const movies: Movie[] = [

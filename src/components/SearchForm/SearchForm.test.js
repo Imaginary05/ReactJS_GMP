@@ -6,7 +6,8 @@
 // the "onChange" prop is called with proper value
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { SearchForm } from './SearchForm';
+import SearchForm from './SearchForm';
+
 
 describe('SearchForm', () => {
     it('renders the initial value provided in props', () => {
@@ -16,7 +17,7 @@ describe('SearchForm', () => {
                 onSearch={() => {}}/>
         );
 
-        const inputValue = screen.getByPlaceholderText(/What do you want to watch?/i);
+        const inputValue = screen.getByTestId("search-input");
         expect(inputValue).toHaveValue(initialQuery);
     })
 
@@ -27,7 +28,7 @@ describe('SearchForm', () => {
             onSearch={onChange}/>
         );
 
-        const input = screen.getByPlaceholderText(/What do you want to watch?/i);
+        const input = screen.getByTestId("search-input");
         const submitButton = screen.getByText(/Search/i);
         const typedQuery = 'click';
 
@@ -42,7 +43,7 @@ describe('SearchForm', () => {
             initialQuery=''
             onSearch={onChange}/>
         );
-        const input = screen.getByPlaceholderText(/What do you want to watch?/i);
+        const input = screen.getByTestId("search-input");
         const typedQuery = 'Enter';
 
         fireEvent.change(input, { target: { value: typedQuery } });

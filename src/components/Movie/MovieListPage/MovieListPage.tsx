@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { movies } from '../../data/movies';
+import { movies } from '../../../data/movies';
 import MovieTile, { Movie } from '../MovieTile/MovieTile';
 import './MovieListPage.css';
 import MovieDetails from '../MovieDetails/MovieDetails';
@@ -7,9 +7,7 @@ import MovieDetails from '../MovieDetails/MovieDetails';
 const MovieListPage: React.FC = () => {
     const [showDetails, setShowDetails] = useState(false);
 
-    const [movieToShow, setMovieToShow] = useState<Movie>({
-        description: '', duration: 0, genres: [], id: -1, posterUrl: '', rating: 0, releaseYear: '', title: ''
-    });
+    const [movieToShow, setMovieToShow] = useState<Movie>(({} as Movie));
 
     const handleDetailsClose = () => {
         setShowDetails(false);

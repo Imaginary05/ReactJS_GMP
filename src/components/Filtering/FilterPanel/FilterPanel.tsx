@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import GenreSelect from '../GenreSelect/GenreSelect';
-import { genres } from '../../data/genres-list';
+import { genres } from '../../../data/genres-list';
 import SortControl from '../SortControl/SortControl';
 import './FilterPanel.css';
-import { options } from '../../data/sort-options';
+import { options } from '../../../data/sort-options';
 
 const FilterPanel: React.FC = () => {
     const [selectedGenre, setSelectedGenre] = useState(genres[0]);

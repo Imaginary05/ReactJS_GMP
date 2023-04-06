@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import SearchForm from './components/SearchForm/SearchForm';
-import FilterPanel from './components/FilterPanel/FilterPanel';
-import MovieListPage from './components/MovieListPage/MovieListPage';
+import FilterPanel from './components/Filtering/FilterPanel/FilterPanel';
+import MovieListPage from './components/Movie/MovieListPage/MovieListPage';
 
 function App() {
     const handleSearch = (query: string) => {
