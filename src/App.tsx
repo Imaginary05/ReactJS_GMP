@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import SearchForm from './components/SearchForm/SearchForm';
 import FilterPanel from './components/Filtering/FilterPanel/FilterPanel';
-import MovieList from './components/Movie/MovieList/MovieList';
+import MovieListPage from './components/Movie/MovieListPage/MovieListPage';
 import Dialog from './components/Dialog/Dialog';
 import MovieForm from './components/Movie/MovieForm/MovieForm';
 
@@ -36,7 +36,7 @@ function App() {
 
             <main className='main'>
                 <FilterPanel></FilterPanel>
-                <MovieList></MovieList>
+                <MovieListPage></MovieListPage>
             </main>
 
             <footer>

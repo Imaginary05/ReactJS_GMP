@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { movies } from '../../../data/movies';
 import MovieTile, { Movie } from '../MovieTile/MovieTile';
-import './MovieList.css';
+import './MovieListPage.css';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import Dialog from '../../Dialog/Dialog';
 import MovieForm from '../MovieForm/MovieForm';
 import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm';
 
-const MovieList: React.FC = () => {
+const MovieListPage: React.FC = () => {
     const [showDetails, setShowDetails] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
@@ -100,4 +100,4 @@ const MovieList: React.FC = () => {
     )
 };
 
-export default MovieList;
+export default MovieListPage;
