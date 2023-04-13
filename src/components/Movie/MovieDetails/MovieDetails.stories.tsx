@@ -15,7 +15,7 @@ Default.args = {
         id: 0,
         posterUrl: "https://example.com/image.jpg",
         title: "Movie Title",
-        releaseYear: '2022',
+        releaseYear: '1994-10-14',
         genres: [],
         rating: 8.5,
         duration: 120,

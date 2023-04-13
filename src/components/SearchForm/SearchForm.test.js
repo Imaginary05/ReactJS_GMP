@@ -17,7 +17,7 @@ describe('SearchForm', () => {
                 onSearch={() => {}}/>
         );
 
-        const inputValue = screen.getByTestId("search-input");
+        const inputValue = screen.getByTestId("input-component");
         expect(inputValue).toHaveValue(initialQuery);
     })
 
@@ -28,7 +28,7 @@ describe('SearchForm', () => {
             onSearch={onChange}/>
         );
 
-        const input = screen.getByTestId("search-input");
+        const input = screen.getByTestId("input-component");
         const submitButton = screen.getByText(/Search/i);
         const typedQuery = 'click';
 
@@ -43,7 +43,7 @@ describe('SearchForm', () => {
             initialQuery=''
             onSearch={onChange}/>
         );
-        const input = screen.getByTestId("search-input");
+        const input = screen.getByTestId("input-component");
         const typedQuery = 'Enter';
 
         fireEvent.change(input, { target: { value: typedQuery } });

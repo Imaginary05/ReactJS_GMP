@@ -29,7 +29,8 @@ const Input: React.FC<InputProps> = ({
     return (
         <input
             type="text"
-            data-testid="search-input"
+            className="input-component"
+            data-testid="input-component"
             placeholder={placeholder}
             value={initialValue}
             onChange={e => setInputValue(e)}

@@ -50,15 +50,13 @@ export default class Counter extends Component<any, any> {
                     this.state.count,
                 ),
                 createElement(Button, {
-                    id: 'increment',
                     title: 'Increment',
-                    count: this.state.count,
+                    type: 'button',
                     onClick: this.increment
                 }),
                 createElement(Button, {
-                    id: 'decrement',
                     title: 'Decrement',
-                    count: this.state.count,
+                    type: 'button',
                     onClick: this.decrement
                 }),
             ]

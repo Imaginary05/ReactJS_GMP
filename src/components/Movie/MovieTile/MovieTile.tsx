@@ -46,8 +46,8 @@ const MovieTile: React.FC<MovieTileProps> = ({
     };
 
     return (
-        <div className="movie-tile" onClick={handleTileClick}>
-            <div className="movie-tile-image">
+        <div className="movie-tile">
+            <div className="movie-tile-image" onClick={handleTileClick}>
                 <img src={movie.posterUrl} alt={movie.title} />
             </div>
             <div className="movie-tile-details">
@@ -55,7 +55,9 @@ const MovieTile: React.FC<MovieTileProps> = ({
                     <div className="movie-tile-title">
                         {movie.title}
                     </div>
-                    <div className="movie-tile-release-date">{movie.releaseYear}</div>
+                    <div className="movie-tile-release-date">
+                        {movie.releaseYear.toString().slice(0, 4)}
+                    </div>
                 </div>
                 <div className='movie-tile-details-block'>
                     <div className="movie-tile-genres">
@@ -76,7 +78,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
                             >
                                 <div className="movie-tile-menu-popup-close">
                                     <MdClear
-                                        className='mdClear'
+                                        className='menu-popup-close'
                                         onClick={() => setShowMenu(!showMenu)}
                                     ></MdClear>
                                 </div>
