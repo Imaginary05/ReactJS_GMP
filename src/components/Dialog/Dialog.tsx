@@ -35,7 +35,7 @@ const Dialog: React.FC<DialogProps> = ({
         <FocusTrap focusTrapOptions={{
             fallbackFocus: '#close'
         }}>
-            <div className='dialog-container'>
+            <div className='dialog-container' role='dialog'>
                 <div className="dialog-wrapper" ref={dialogContainer}>
                     <div className='dialog-content'>
                         {
@@ -59,17 +59,3 @@ const Dialog: React.FC<DialogProps> = ({
 };
 
 export default Dialog;
-
-/*            <div className="dialog-overlay">
-                <div className="dialog-container" ref={dialogContainer}>
-                    <header className="dialog-header">
-                        <h2 className="dialog-title">{title}</h2>
-                        <button className="dialog-close-btn" onClick={onClose}>
-                            <span aria-hidden="true">&times;</span>
-                            <span className="sr-only">Close</span>
-                        </button>
-                    </header>
-                    <div className="dialog-body">{children}</div>
-                </div>
-            </div>
-* */

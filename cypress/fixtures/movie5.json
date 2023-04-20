@@ -1,0 +1,15 @@
+{
+    "data": [
+        {
+            "id": 4,
+            "title": "Movie5",
+            "posterPath": "../../../assets/poster5.png",
+            "releaseDate": "2020-12-12",
+            "genres": ["Comedy"],
+            "runtime": 99,
+            "voteAverage": 8.3,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        }
+    ]
+
+}

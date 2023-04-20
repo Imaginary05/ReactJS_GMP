@@ -2,6 +2,13 @@
     margin: 30px;
 }
 
+.movie-tile-image {
+    width: 300px;
+    height: 450px;
+    min-width: 300px;
+    min-height: 450px;
+}
+
 .movie-tile-details {
     padding-top: 10px;
     color: #cccccc;
@@ -14,13 +21,25 @@
     justify-content: space-between;
 }
 
+.movie-tile-genres {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:block;
+    width : 300px;
+}
+
 .movie-tile-menu {
     display: flex;
     align-self: flex-end;
 }
 
 .movie-tile-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-bottom: 10px;
+    width: 200px;
 }
 .movie-tile-release-date {
     border: 1px solid white;

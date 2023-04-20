@@ -4,17 +4,7 @@ import {
     MdMoreVert
 } from 'react-icons/md';
 import './MovieTile.css';
-
-export interface Movie {
-    id: number;
-    title: string;
-    posterUrl: string;
-    releaseYear: string;
-    genres: Array<string>;
-    duration: number;
-    rating: number;
-    description: string;
-}
+import Movie from '../movie';
 
 export interface MovieTileProps {
     movie: Movie;
@@ -47,8 +37,8 @@ const MovieTile: React.FC<MovieTileProps> = ({
 
     return (
         <div className="movie-tile">
-            <div className="movie-tile-image" onClick={handleTileClick}>
-                <img src={movie.posterUrl} alt={movie.title} />
+            <div onClick={handleTileClick}>
+                <img className="movie-tile-image" src={movie.posterPath} alt={movie.title} />
             </div>
             <div className="movie-tile-details">
                 <div className='movie-tile-details-block'>
@@ -56,14 +46,12 @@ const MovieTile: React.FC<MovieTileProps> = ({
                         {movie.title}
                     </div>
                     <div className="movie-tile-release-date">
-                        {movie.releaseYear.toString().slice(0, 4)}
+                        {movie.releaseDate?.slice(0, 4)}
                     </div>
                 </div>
                 <div className='movie-tile-details-block'>
                     <div className="movie-tile-genres">
-                        {movie.genres.map((genre) => (
-                            <span key={genre}>{genre}</span>
-                        ))}
+                        {movie.genres.join(', ')}
                     </div>
                     <div
                         className="movie-tile-menu"

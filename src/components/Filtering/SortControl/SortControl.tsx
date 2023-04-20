@@ -27,7 +27,7 @@ const SortControl: React.FC<SortControlProps> = ({
     };
 
     return (
-        <div className='sort'>
+        <div className='sort' data-testid='sort-control'>
             <label
                 className='sort-label'
                 htmlFor="sort-select"

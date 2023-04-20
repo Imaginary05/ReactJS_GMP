@@ -6,12 +6,12 @@ describe("MovieDetails", () => {
     const movie = {
         id: 0,
         title: "Movie Title",
-        posterUrl: "https://example.com/image.jpg",
-        releaseYear: 2022,
+        posterPath: "assets/poster1.png",
+        releaseDate: 2022,
         genres: [],
-        rating: 8.5,
+        voteAverage: 8.5,
         duration: 120,
-        description: "Movie description goes here.",
+        overview: "Movie overview goes here.",
     };
     const onClick = jest.fn();
 
@@ -25,7 +25,7 @@ describe("MovieDetails", () => {
         const posterImage = screen.getByAltText(movie.title);
 
         expect(posterImage).toBeInTheDocument();
-        expect(posterImage.getAttribute("src")).toBe(movie.posterUrl);
+        expect(posterImage.getAttribute("src")).toBe(movie.posterPath);
     });
 
     it("should render movie title", () => {
@@ -39,32 +39,32 @@ describe("MovieDetails", () => {
     it("should render movie year", () => {
         render(<MovieDetails movie={movie}  onDetailsClosed={()=>{}}/>);
 
-        const movieYear = screen.getByText(`${movie.releaseYear}`);
+        const movieYear = screen.getByText(`${movie.releaseDate}`);
 
         expect(movieYear).toBeInTheDocument();
     });
 
-    it("should render movie rating", () => {
+    it("should render movie voteAverage", () => {
         render(<MovieDetails movie={movie}  onDetailsClosed={()=>{}}/>);
 
-        const movieRating = screen.getByText(`${movie.rating}`);
+        const movievoteAverage = screen.getByText(`${movie.voteAverage}`);
 
-        expect(movieRating).toBeInTheDocument();
+        expect(movievoteAverage).toBeInTheDocument();
     });
 
     it("should render movie duration", () => {
         render(<MovieDetails movie={movie}  onDetailsClosed={()=>{}}/>);
 
-        const movieDuration = screen.getByText(`${Math.floor(movie.duration/60)}h ${movie.duration%60}min`);
+        const movieDuration = screen.getByText(movie.duration);
 
         expect(movieDuration).toBeInTheDocument();
     });
 
-    it("should render movie description", () => {
+    it("should render movie overview", () => {
         render(<MovieDetails movie={movie}  onDetailsClosed={()=>{}}/>);
 
-        const movieDescription = screen.getByText(movie.description);
+        const movieoverview = screen.getByText(movie.overview);
 
-        expect(movieDescription).toBeInTheDocument();
+        expect(movieoverview).toBeInTheDocument();
     });
 });

@@ -6,9 +6,9 @@ describe('MovieTile', () => {
     const movie = {
         id: 1,
         title: 'Movie Title',
-        releaseYear: 2022,
-        posterUrl: 'http://example.com/poster.jpg',
-        genres: ['Action', 'Adventure'],
+        releaseDate: '2022',
+        posterPath: 'http://example.com/poster.jpg',
+        genres: ['Comedy', 'Adventure'],
     };
     const onClick = jest.fn();
 
@@ -33,10 +33,7 @@ describe('MovieTile', () => {
         expect(screen.getByText('2022')).toBeInTheDocument();
 
         movie.genres.forEach((genre) => {
-            // expect(screen.getByText('Action, Adventure')).toBeInTheDocument();
-            expect(screen.getAllByText((content, element) => {
-                return element.tagName.toLowerCase() === 'span' && content.includes(genre);
-            })).toHaveLength(1);
+            expect(screen.getByText(movie.genres.join(', '))).toBeInTheDocument();
         });
     });
 
