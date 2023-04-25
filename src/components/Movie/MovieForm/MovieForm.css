@@ -1,0 +1,44 @@
+.edit-movie-form {
+    font-size: 1.15rem;
+    width: 50vw;
+}
+
+.movie-form__row {
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-form__column {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 20px 0 0;
+    width: 100%;
+}
+
+.movie-form__column label {
+    color: #F65261;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+}
+
+.movie-form__column textarea {
+    min-height: 100px;
+    margin-right: 20px;
+}
+
+.movie-form__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.movie-form__select {
+    background: rgba(50, 50, 50, 0.8);
+    color: white;
+    mix-blend-mode: normal;
+    opacity: 0.7;
+    border-radius: 4px;
+    min-height: 60px;
+    padding: 0 20px;
+    border: none;
+}

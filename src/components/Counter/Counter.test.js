@@ -10,7 +10,7 @@ describe('Counter', () => {
         const initialCount = 5;
         render(<Counter initialCount={initialCount} />);
 
-        const counterValue = screen.getByText(/Times clicked/i);
+        const counterValue = screen.getByText(/Count:/i);
         expect(counterValue).toHaveTextContent(initialCount.toString());
     });
 
@@ -21,7 +21,7 @@ describe('Counter', () => {
         const decrementButton = screen.getByText(/Decrement/i);
         fireEvent.click(decrementButton);
 
-        const counterValue = screen.getByText(/Times clicked/i);
+        const counterValue = screen.getByText(/Count:/i);
         expect(counterValue).toHaveTextContent((initialCount - 1).toString());
     });
 
@@ -32,7 +32,7 @@ describe('Counter', () => {
         const incrementButton = screen.getByText(/Increment/i);
         fireEvent.click(incrementButton);
 
-        const counterValue = screen.getByText(/Times clicked/i);
+        const counterValue = screen.getByText(/Count:/i);
         expect(counterValue).toHaveTextContent((initialCount + 1).toString());
     });
 });

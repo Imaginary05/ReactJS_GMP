@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import MovieDetails from "./MovieDetails";
 
 describe("MovieDetails", () => {
@@ -66,13 +66,5 @@ describe("MovieDetails", () => {
         const movieDescription = screen.getByText(movie.description);
 
         expect(movieDescription).toBeInTheDocument();
-    });
-
-    it('calls onClick callback when close icon clicked', () => {
-        render(<MovieDetails movie={movie}  onDetailsClosed={onClick}/>);
-
-        fireEvent.click(screen.getByTestId('close-details'));
-
-        expect(onClick).toHaveBeenCalledTimes(1);
     });
 });

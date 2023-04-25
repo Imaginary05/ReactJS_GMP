@@ -4,7 +4,7 @@
 
 .movie-tile-details {
     padding-top: 10px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #cccccc;
     font-size: 1.25rem;
 }
 
@@ -50,11 +50,11 @@
     padding-right: 5px;
 }
 
-.mdClear {
+.menu-popup-close {
     cursor: pointer;
 }
 
-.mdClear:hover {
+.menu-popup-close:hover {
     color: #F65261;
 }
 

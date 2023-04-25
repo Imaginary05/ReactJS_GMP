@@ -1,8 +1,7 @@
 .movie-details {
     display: flex;
-    margin: 0 50px;
-    padding: 30px 10px;
     background: #232323;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .movie-details__info {
@@ -23,6 +22,8 @@
     border: 2px solid white;
     padding: 10px;
     border-radius: 50%;
+    width: 20px;
+    text-align: center;
 }
 
 .movie-details__genres {

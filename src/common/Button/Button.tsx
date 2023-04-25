@@ -1,17 +1,27 @@
 import './Button.css';
+import React from 'react';
 
-// @ts-ignore
-export default function Button(props) {
+export interface ButtonProps {
+    type?: "button" | "reset" | "submit" | undefined;
+    title: string;
+    onClick: (e: any) => void;
+}
 
+const Button: React.FC<ButtonProps> = ({
+    type = 'button',
+    title,
+    onClick
+}) => {
     return (
         <button
-            type='button'
+            type={type}
             className='button'
-            onClick={props.onClick}
-            key={props.id}
+            onClick={onClick}
+            key={title}
         >
-            {props.title}
+            {title}
         </button>
     );
 }
 
+export default Button;

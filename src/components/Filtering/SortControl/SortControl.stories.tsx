@@ -4,7 +4,7 @@ import {
     Story
 } from '@storybook/react';
 import { useState } from 'react';
-import { options } from '../../data/sort-options';
+import { options } from '../../../data/sort-options';
 
 export default {
     title: 'Components/SortControl',

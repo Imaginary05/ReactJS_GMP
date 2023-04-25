@@ -1,31 +1,46 @@
 import './Input.css'
-import {
+import React, {
     ChangeEvent,
     useState
 } from 'react';
 
-// @ts-ignore
-export default function Input(props) {
-    const [initialValue, setValue] = useState(props.value);
+export interface InputProps {
+    value: string;
+    placeholder: string;
+    onChange: (value: string) => void;
+    onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+const Input: React.FC<InputProps> = ({
+    value,
+    placeholder,
+    onChange,
+    onKeyUp,
+}) => {
+    const [initialValue, setValue] = useState(value);
 
     const setInputValue = (event: ChangeEvent<HTMLInputElement>) => {
         let value = (event.target as HTMLInputElement).value;
         setValue(value);
 
-        props.onChange(value)
+        onChange(value)
     }
 
     return (
         <input
             type="text"
-            placeholder={props.placeholder}
+            className="input-component"
+            data-testid="input-component"
+            placeholder={placeholder}
             value={initialValue}
             onChange={e => setInputValue(e)}
-            onKeyUp={props.onKeyUp}
+            onKeyUp={onKeyUp}
         ></input>
     )
 }
 
-Input.defaultProps = {
-    placeholder: 'Enter text to start search'
-}
+export default Input;
+
+// Input.defaultProps = {
+//     placeholder: 'Enter text to start search'
+// }

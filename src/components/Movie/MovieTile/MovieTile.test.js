@@ -50,7 +50,7 @@ describe('MovieTile', () => {
             />
         );
 
-        fireEvent.click(screen.getByText(`${movie.title}`));
+        fireEvent.click(screen.getByAltText(`${movie.title}`));
 
         expect(onClick).toHaveBeenCalledTimes(1);
         expect(onClick).toHaveBeenCalledWith(movie.id);
