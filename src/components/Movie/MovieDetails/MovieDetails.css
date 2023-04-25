@@ -18,7 +18,7 @@
     margin-right: 20px;
 }
 
-.movie-details__rating {
+.movie-details__voteAverage {
     border: 2px solid white;
     padding: 10px;
     border-radius: 50%;
@@ -42,7 +42,7 @@
     font-size: 1.25rem;
 }
 
-.movie-details__description {
+.movie-details__overview {
     margin-top: 25px;
 }
 

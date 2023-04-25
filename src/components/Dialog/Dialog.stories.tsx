@@ -32,12 +32,12 @@ MovieDetail.args = {
         movie={{
             id: 0,
             title: 'Test Movie',
-            posterUrl: 'https://example.com/image.jpg',
-            releaseYear: '2022-01-01',
+            posterPath: 'assets/poster1.png',
+            releaseDate: '2022-01-01',
             genres: [genres[1]],
-            duration: 90,
-            rating: 7.5,
-            description: 'Test description',
+            runtime: 90,
+            voteAverage: 7.5,
+            overview: 'Test overview',
         }}
     ></MovieDetails>)
 };

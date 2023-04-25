@@ -13,12 +13,12 @@ export const Default = Template.bind({});
 Default.args = {
     movie: {
         id: 0,
-        posterUrl: "https://example.com/image.jpg",
+        posterPath: "assets/poster1.png",
         title: "Movie Title",
-        releaseYear: '1994-10-14',
+        releaseDate: '1994-10-14',
         genres: [],
-        rating: 8.5,
-        duration: 120,
-        description: "Movie description goes here.",
+        voteAverage: 8.5,
+        runtime: 120,
+        overview: "Movie overview goes here.",
     },
 };

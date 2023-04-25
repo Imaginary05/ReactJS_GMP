@@ -1,0 +1,55 @@
+{
+    "data": [
+        {
+            "id": 0,
+            "title": "Movie1",
+            "posterPath": "assets/poster1.png",
+            "releaseDate": "2008-06-09",
+            "genres": ["Comedy"],
+            "runtime": 80,
+            "voteAverage": 8.5,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        },
+        {
+            "id": 1,
+            "title": "Movie2",
+            "posterPath": "../../../assets/poster2.png",
+            "releaseDate": "2020-05-20",
+            "genres": ["Comedy"],
+            "runtime": 90,
+            "voteAverage": 7.5,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        },
+        {
+            "id": 2,
+            "title": "Movie3",
+            "posterPath": "../../../assets/poster3.png",
+            "releaseDate": "1999-12-22",
+            "genres": ["Comedy"],
+            "runtime": 85,
+            "voteAverage": 6,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        },
+        {
+            "id": 3,
+            "title": "Movie4",
+            "posterPath": "../../../assets/poster4.png",
+            "releaseDate": "2021-11-11",
+            "genres": ["Comedy"],
+            "runtime": 65,
+            "voteAverage": 9.7,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        },
+        {
+            "id": 4,
+            "title": "Movie5",
+            "posterPath": "../../../assets/poster5.png",
+            "releaseDate": "2020-12-12",
+            "genres": ["Comedy"],
+            "runtime": 99,
+            "voteAverage": 8.3,
+            "overview": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?"
+        }
+    ]
+
+}

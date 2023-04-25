@@ -26,7 +26,7 @@ const GenreSelect: React.FC<GenreSelectProps> = ({
 }) => {
 
     return (
-        <div className='genres'>
+        <div className='genres' data-testid='genre-select'>
             {
                 genres.map((genre) =>
                     <div

@@ -1,34 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GenreSelect from '../GenreSelect/GenreSelect';
-import { genres } from '../../../data/genres-list';
 import SortControl from '../SortControl/SortControl';
 import './FilterPanel.css';
-import { options } from '../../../data/sort-options';
 
-const FilterPanel: React.FC = () => {
-    const [selectedGenre, setSelectedGenre] = useState(genres[0]);
-    const [selectedOption, setSelectedOption] = useState(options[0]);
+export interface FilterPanelProps {
+    genres: Array<string>;
+    sortOptions: Array<string>;
+    activeGenre: string;
+    sortCriterion: string
+    onGenreSelect: (genre: string) => void;
+    onSortByOptionSelect: (criterion: string) => void;
+}
 
-    const handleSelectGenre = (genre: string) => {
-        setSelectedGenre(genre);
-    };
-
-    const handleSelectedOption = (genre: string) => {
-        setSelectedOption(genre);
-    };
-
+const FilterPanel: React.FC<FilterPanelProps> = ({
+    genres,
+    sortOptions,
+    activeGenre,
+    sortCriterion,
+    onGenreSelect,
+    onSortByOptionSelect,
+}) => {
     return (
         <div className='navigation'>
             <nav className='filters'>
                 <GenreSelect
                     genres={genres}
-                    selectedGenre={selectedGenre}
-                    onSelect={handleSelectGenre}
+                    selectedGenre={activeGenre}
+                    onSelect={onGenreSelect}
                 ></GenreSelect>
                 <SortControl
-                    options={options}
-                    selectedOption={selectedOption}
-                    onOptionChange={handleSelectedOption}
+                    options={sortOptions}
+                    selectedOption={sortCriterion}
+                    onOptionChange={onSortByOptionSelect}
                 ></SortControl>
             </nav>
             <hr/>

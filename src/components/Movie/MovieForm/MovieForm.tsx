@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Movie } from '../MovieTile/MovieTile';
 import './MovieForm.css';
 import { genres } from '../../../data/genres-list';
 import Button from '../../../common/Button/Button';
+import Movie from '../movie';
 
 export type MovieFormProps = {
     movie?: Movie;
@@ -10,16 +10,7 @@ export type MovieFormProps = {
 };
 
 const MovieForm: React.FC<MovieFormProps> = ({
-    movie = {
-        id: 0,
-        title: '',
-        posterUrl: '',
-        releaseYear: '',
-        genres,
-        duration: 0,
-        rating: 0,
-        description: '',
-    },
+    movie= ({} as Movie),
     onSubmit,
 }) => {
     const [initialMovie, setMovie] = useState(movie);
@@ -27,12 +18,12 @@ const MovieForm: React.FC<MovieFormProps> = ({
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setEditedMovie((prevMovie) => ({ ...prevMovie, [name]: value }));
+        setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, [name]: value }));
     };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
-        setEditedMovie((prevMovie) => ({ ...prevMovie, genres: selectedGenres }));
+        setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, genres: selectedGenres }));
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,12 +54,12 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         required />
                 </div>
                 <div className="movie-form__column">
-                    <label htmlFor="releaseYear">Release Date</label>
+                    <label htmlFor="releaseDate">Release Date</label>
                     <input
                         type="date"
-                        id="releaseYear"
-                        name="releaseYear"
-                        value={editedMovie?.releaseYear?.toString()}
+                        id="releaseDate"
+                        name="releaseDate"
+                        value={editedMovie?.releaseDate}
                         onChange={handleChange}
                         required />
                 </div>
@@ -79,18 +70,18 @@ const MovieForm: React.FC<MovieFormProps> = ({
                     <input
                         type="url"
                         id="moviePath"
-                        name="posterUrl"
-                        value={editedMovie?.posterUrl}
+                        name="posterPath"
+                        value={editedMovie?.posterPath}
                         onChange={handleChange}
                         required />
                 </div>
                 <div className="movie-form__column">
-                    <label htmlFor="rating">Rating</label>
+                    <label htmlFor="voteAverage">voteAverage</label>
                     <input
                         type="number"
-                        id="rating"
-                        name="rating"
-                        value={editedMovie?.rating}
+                        id="voteAverage"
+                        name="voteAverage"
+                        value={editedMovie?.voteAverage}
                         onChange={handleChange}
                         min={0}
                         max={10}
@@ -105,7 +96,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         id="genres"
                         name="genres"
                         className="movie-form__select"
-                        defaultValue={editedMovie.genres[0]}
+                        defaultValue={editedMovie.genres ? editedMovie.genres[0] : genres[0]}
                         onChange={handleSelectChange}
                         required
                     >
@@ -125,7 +116,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         type="number"
                         id="duration"
                         name="duration"
-                        value={editedMovie?.duration}
+                        value={editedMovie?.runtime}
                         onChange={handleChange}
                         min={0}
                         max={500}
@@ -134,11 +125,11 @@ const MovieForm: React.FC<MovieFormProps> = ({
                 </div>
             </div>
             <div className="movie-form__column">
-                <label htmlFor="description">Overview</label>
+                <label htmlFor="overview">Overview</label>
                 <textarea
-                    id="description"
-                    name="description"
-                    value={editedMovie?.description}
+                    id="overview"
+                    name="overview"
+                    value={editedMovie?.overview}
                     onChange={handleChange}
                     required />
             </div>

@@ -13,37 +13,36 @@ describe('MovieForm', () => {
         );
 
         const titleInput = screen.getByLabelText(/title/i);
-        const releaseYearInput = screen.getByLabelText(/release date/i);
-        const posterUrlInput = screen.getByLabelText(/movie url/i);
-        const ratingInput = screen.getByLabelText(/rating/i);
+        const releaseDateInput = screen.getByLabelText(/release date/i);
+        const posterPathInput = screen.getByLabelText(/movie url/i);
+        const voteAverageInput = screen.getByLabelText(/voteAverage/i);
         const genresInput = screen.getByLabelText(/genres/i);
         const runtimeInput = screen.getByLabelText(/runtime/i);
-        const descriptionInput = screen.getByLabelText(/overview/i);
+        const overviewInput = screen.getByLabelText(/overview/i);
         const submitButton = screen.getByRole('button', { name: /submit/i });
 
         fireEvent.change(titleInput, { target: { value: 'Test Movie' } });
-        fireEvent.change(releaseYearInput, { target: { value: '2022-01-01' } });
-        fireEvent.change(posterUrlInput, {
+        fireEvent.change(releaseDateInput, { target: { value: '2022-01-01' } });
+        fireEvent.change(posterPathInput, {
             target: { value: 'https://example.com/image.jpg' },
         });
-        fireEvent.change(ratingInput, { target: { value: 7.5 } });
+        fireEvent.change(voteAverageInput, { target: { value: 7.5 } });
         fireEvent.change(genresInput, { target: { value: genres[1] } });
         fireEvent.change(runtimeInput, { target: { value: 90 } });
-        fireEvent.change(descriptionInput, {
-            target: { value: 'Test description' },
+        fireEvent.change(overviewInput, {
+            target: { value: 'Test overview' },
         });
 
         fireEvent.click(submitButton);
 
         expect(onSubmit).toHaveBeenCalledWith({
-            id: 0,
             title: 'Test Movie',
-            posterUrl: 'https://example.com/image.jpg',
-            releaseYear: '2022-01-01',
+            posterPath: 'https://example.com/image.jpg',
+            releaseDate: '2022-01-01',
             genres: [genres[1]],
             duration: "90",
-            rating: "7.5",
-            description: 'Test description',
+            voteAverage: "7.5",
+            overview: 'Test overview',
         });
     });
 
@@ -51,12 +50,13 @@ describe('MovieForm', () => {
         const initialMovie = {
             id: 0,
             title: 'Test Movie',
-            posterUrl: 'https://example.com/image.jpg',
-            releaseYear: '2022-01-01',
+            posterPath: 'https://example.com/image.jpg',
+            releaseDate: '2022-01-01',
             genres: [genres[1]],
+            runtime: "90",
             duration: "90",
-            rating: "7.5",
-            description: 'Test description',
+            voteAverage: "7.5",
+            overview: 'Test overview',
         };
         const onSubmit = jest.fn();
 
@@ -68,34 +68,34 @@ describe('MovieForm', () => {
         );
 
         const titleInput = screen.getByLabelText(/title/i);
-        const releaseYearInput = screen.getByLabelText(/release date/i);
-        const posterUrlInput = screen.getByLabelText(/movie url/i);
-        const ratingInput = screen.getByLabelText(/rating/i);
+        const releaseDateInput = screen.getByLabelText(/release date/i);
+        const posterPathInput = screen.getByLabelText(/movie url/i);
+        const voteAverageInput = screen.getByLabelText(/voteAverage/i);
         const genresInput = screen.getByLabelText(/genres/i);
         const runtimeInput = screen.getByLabelText(/runtime/i);
-        const descriptionInput = screen.getByLabelText(/overview/i);
+        const overviewInput = screen.getByLabelText(/overview/i);
         const resetButton = screen.getByRole('button', { name: /reset/i });
 
         fireEvent.change(titleInput, { target: { value: 'Test Movie 2' } });
-        fireEvent.change(releaseYearInput, { target: { value: '2022-02-02' } });
-        fireEvent.change(posterUrlInput, {
+        fireEvent.change(releaseDateInput, { target: { value: '2022-02-02' } });
+        fireEvent.change(posterPathInput, {
             target: { value: 'https://example.com/image2.jpg' },
         });
-        fireEvent.change(ratingInput, { target: { value: 2.5 } });
+        fireEvent.change(voteAverageInput, { target: { value: 2.5 } });
         fireEvent.change(genresInput, { target: { value: genres[2] } });
         fireEvent.change(runtimeInput, { target: { value: 20 } });
-        fireEvent.change(descriptionInput, {
-            target: { value: 'Test description 2' },
+        fireEvent.change(overviewInput, {
+            target: { value: 'Test overview 2' },
         });
 
         fireEvent.click(resetButton);
 
         expect(titleInput.value).toEqual(initialMovie.title);
-        expect(releaseYearInput.value).toEqual(initialMovie.releaseYear);
-        expect(posterUrlInput.value).toEqual(initialMovie.posterUrl);
-        expect(ratingInput.value).toEqual(initialMovie.rating);
+        expect(releaseDateInput.value).toEqual(initialMovie.releaseDate);
+        expect(posterPathInput.value).toEqual(initialMovie.posterPath);
+        expect(voteAverageInput.value).toEqual(initialMovie.voteAverage);
         expect([genresInput.value]).toEqual(initialMovie.genres);
-        expect(runtimeInput.value).toEqual(initialMovie.duration);
-        expect(descriptionInput.value).toEqual(initialMovie.description);
+        expect(runtimeInput.value).toEqual(initialMovie.runtime);
+        expect(overviewInput.value).toEqual(initialMovie.overview);
     });
 });

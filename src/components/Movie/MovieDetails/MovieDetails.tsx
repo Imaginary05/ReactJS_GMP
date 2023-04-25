@@ -1,11 +1,11 @@
 // This component will render movie details when a movie is selected from the list (clicked).
 // The details include movie poster image on the left and the rest of info on the right.
 // The component should take properties to receive image url,
-// movie name, release year, rating, duration and a description.
+// movie name, release year, voteAverage, duration and a overview.
 // Alternatively, you can specify a single property that accepts an object with all movie info.
 import './MovieDetails.css'
 import React from "react";
-import { Movie } from '../MovieTile/MovieTile';
+import Movie from '../movie';
 
 export type MovieDetailsProps = {
     movie: Movie;
@@ -16,14 +16,14 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({
 }) => {
 
     return (
-        <div className="movie-details">
+        <div className="movie-details" data-testid='movie-details'>
             <div className="movie-details__poster">
-                <img src={movie.posterUrl} alt={movie.title} />
+                <img src={movie.posterPath} alt={movie.title} />
             </div>
             <div className="movie-details__info">
                 <div className="movie-details__row">
                     <div className="movie-details__title">{movie.title}</div>
-                    <div className="movie-details__rating">{movie.rating}</div>
+                    <div className="movie-details__voteAverage">{movie.voteAverage}</div>
                 </div>
                 <div className="movie-details__row movie-details__genres">
                     {
@@ -33,14 +33,14 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({
                     }
                 </div>
                 <div className="movie-details__row">
-                    <div className="movie-details__year">{movie.releaseYear.toString()}</div>
+                    <div className="movie-details__year">{movie.releaseDate}</div>
                     <div className="movie-details__duration">
                         {
-                            `${Math.floor(movie.duration/60)}h ${movie.duration%60}min`
+                            movie.duration
                         }
                     </div>
                 </div>
-                <div className="movie-details__description">{movie.description}</div>
+                <div className="movie-details__overview">{movie.overview}</div>
             </div>
         </div>
     );
