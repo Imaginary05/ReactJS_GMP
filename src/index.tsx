@@ -3,13 +3,41 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+    createBrowserRouter,
+    RouterProvider
+} from 'react-router-dom';
+import ErrorPage from './common/ErrorPage/ErrorPage';
+import Movie from './components/Movie/movie';
+import Fetch from './services/fetch';
+import MovieLoader from './common/DataLoader/MovieLoader';
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App/>,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: 'movies/:movieId',
+                loader:  async ({ params }) => {
+                    return Fetch<Movie>(`movies/${params.movieId}`)
+                        .then(
+                            (movie: any) => new Movie(movie)
+                        );
+                },
+                element: <MovieLoader></MovieLoader>
+            }
+        ]
+    },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <RouterProvider router={router} />
   </React.StrictMode>
 );
 

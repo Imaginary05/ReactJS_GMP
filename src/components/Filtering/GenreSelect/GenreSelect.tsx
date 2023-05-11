@@ -34,6 +34,7 @@ const GenreSelect: React.FC<GenreSelectProps> = ({
                         key={genre}
                     >
                         <button
+                            id={genre}
                             className={`genre${genre === selectedGenre ? ' selected' : ''}`}
                             onClick={() => onSelect(genre)}
                         >

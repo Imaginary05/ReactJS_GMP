@@ -11,7 +11,7 @@ export const movies: Movie[] = [
         runtime: 80,
         voteAverage: 8.5,
         overview: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
-    },
+    } as Movie,
     {
         id: 1,
         title: 'Movie2',
@@ -21,7 +21,7 @@ export const movies: Movie[] = [
         runtime: 90,
         voteAverage: 7.5,
         overview: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
-    },
+    } as Movie,
     {
         id: 2,
         title: 'Movie3',
@@ -31,7 +31,7 @@ export const movies: Movie[] = [
         runtime: 85,
         voteAverage: 6,
         overview: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
-    },
+    } as Movie,
     {
         id: 3,
         title: 'Movie4',
@@ -41,7 +41,7 @@ export const movies: Movie[] = [
         runtime: 65,
         voteAverage: 9.7,
         overview: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
-    },
+    } as Movie,
     {
         id: 4,
         title: 'Movie5',
@@ -51,5 +51,5 @@ export const movies: Movie[] = [
         runtime: 99,
         voteAverage: 8.3,
         overview: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at, culpa est et eveniet expedita harum hic iusto libero non odio possimus quam qui quia recusandae sit unde veniam vero?',
-    },
+    } as Movie,
 ];

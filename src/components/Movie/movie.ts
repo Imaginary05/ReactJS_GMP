@@ -15,21 +15,35 @@ export interface MovieData {
 
 export default class Movie {
     constructor(
-        public id: number,
-        public title: string,
-        public voteAverage: number,
-        public releaseDate: string,
-        public posterPath: string,
-        public overview: string,
-        public genres: Array<string>,
-        public runtime: number,
-        public tagline?: string,
-        public voteCount?: number,
-        public budget?: number,
-        public revenue?: number,
+        public movie: MovieData
     ) {
+        this.id = this.movie.id;
+        this.title = this.movie.title;
+        this.posterPath = this.movie.poster_path;
+        this.releaseDate = this.movie.release_date;
+        this.genres = this.movie.genres;
+        this.runtime = this.movie.runtime;
+        this.voteAverage = this.movie.vote_average;
+        this.overview = this.movie.overview;
+        this.tagline = this.movie.tagline;
+        this.voteCount = this.movie.vote_count;
+        this.budget = this.movie.budget;
+        this.revenue = this.movie.revenue;
+
         this.duration = `${Math.floor(this.runtime/60)}h ${this.runtime%60}min`;
     }
 
+    readonly id: number;
+    readonly title: string;
+    readonly posterPath: string;
+    readonly releaseDate: string;
+    readonly genres: Array<string>;
+    readonly runtime: number;
+    readonly voteAverage: number;
+    readonly overview: string;
+    readonly tagline?: string;
+    readonly voteCount?: number;
+    readonly budget?: number;
+    readonly revenue?: number;
     readonly duration?: string;
 }
