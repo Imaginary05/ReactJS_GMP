@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import MovieTile from '../MovieTile/MovieTile';
 import './MovieListPage.css';
-import Dialog from '../../Dialog/Dialog';
 import MovieForm from '../MovieForm/MovieForm';
 import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm';
 import Fetch from '../../../services/fetch';
@@ -20,6 +19,7 @@ import {
     useSearchParams
 } from 'react-router-dom';
 import queryString from 'query-string';
+import MovieDetails from '../MovieDetails/MovieDetails';
 
 const MovieListPage: React.FC = () => {
     const [query] = useSearchParams();
@@ -35,6 +35,8 @@ const MovieListPage: React.FC = () => {
     const [showEditMovieDialog, setShowEditMovieDialog] = useState(false);
 
     const [showDeleteMovieDialog, setShowDeleteMovieDialog] = useState(false);
+    const [deletedMovieCount, setDeletedMovieCount] = useState(0);
+
     const [showAddMovieDialog, setShowAddMovieDialog] = useState(false);
 
     const navigate = useNavigate();
@@ -69,6 +71,7 @@ const MovieListPage: React.FC = () => {
                 const data: Movie[] = response.data.map(
                     (movie: MovieData) => new Movie(movie)
                 );
+
                 setMovieList(data);
 
                 const movieId = location.pathname.split('/')[2];
@@ -77,16 +80,40 @@ const MovieListPage: React.FC = () => {
                     Fetch(`movies/${movieId}`).then(
                         (response: any) => {
                             let selectedMovie = new Movie(response);
-                            handleTileClick(selectedMovie);
+
+                            if (location.pathname.includes('movies')) {
+                                handleTileClick(selectedMovie);
+
+                            } else {
+                                handleEditClick(selectedMovie)
+                            }
                         }
                     )
+                } if(location.pathname.includes('new')) {
+                    handleAddMovie();
                 }
             }
         );
-    }, [activeGenre, sortCriterion, searchQuery]);
+    }, [activeGenre, sortCriterion, searchQuery, deletedMovieCount]);
+
+    const onDelete = () => {
+        let movieId = location.pathname.split('/')[2];
+
+        Fetch(`movies/${movieId}`, {
+            method: 'DELETE'
+        });
+
+        handleDialogClose();
+        setDeletedMovieCount(deletedMovieCount + 1);
+    }
+
+    const handleFormSubmit = () => {
+        handleDialogClose();
+    }
 
     const handleAddMovie = () => {
         setShowAddMovieDialog(true);
+        navigate(`new/${location.search}`);
     }
 
     const handleDialogClose = () => {
@@ -106,10 +133,12 @@ const MovieListPage: React.FC = () => {
     const handleEditClick = (movie: Movie) => {
         setSelectedMovie(movie);
         setShowEditMovieDialog(true);
+        navigate(`edit/${movie.id}/${location.search}`);
     };
 
     const handleDeleteClick = (movie: Movie) => {
         setShowDeleteMovieDialog(true);
+        navigate(`delete/${movie.id}/${location.search}`);
     };
 
     const handleSearch = (search: string) => {
@@ -180,53 +209,46 @@ const MovieListPage: React.FC = () => {
 
             {
                 showAddMovieDialog && (
-                    <Dialog
-                        title={`add movie`.toUpperCase()}
-                        children={
-                            <MovieForm
-                                onSubmit={()=>{}}
-                            ></MovieForm>
+                    <Outlet context={
+                        {
+                            title: `add movie`.toUpperCase(),
+                            children: <MovieForm onFormSubmit={handleFormSubmit}></MovieForm>,
+                            onClose: handleDialogClose,
                         }
-                        onClose={handleDialogClose}
-                    ></Dialog>
+                    }/>
                 )
             }
             {
                 showDetailsMovieDialog && (
-                    <Dialog
-                        title=''
-                        onClose={handleDialogClose}
-                        children={
-                            <Outlet />
+                    <Outlet context={
+                        {
+                            title: '',
+                            children: <MovieDetails movie={selectedMovie}></MovieDetails>,
+                            onClose: handleDialogClose,
                         }
-                    ></Dialog>
+                    }/>
                 )
             }
             {
                 showEditMovieDialog && (
-                    <Dialog
-                        title={`edit movie`.toUpperCase()}
-                        onClose={handleDialogClose}
-                        children={
-                            <MovieForm
-                                movie={selectedMovie}
-                                onSubmit={handleEditClick}
-                            ></MovieForm>
+                    <Outlet context={
+                        {
+                            title: `edit movie`.toUpperCase(),
+                            children: <MovieForm movie={selectedMovie} onFormSubmit={handleFormSubmit}></MovieForm>,
+                            onClose: handleDialogClose,
                         }
-                    ></Dialog>
+                    }/>
                 )
             }
             {
                 showDeleteMovieDialog && (
-                    <Dialog
-                        title={`delete movie`.toUpperCase()}
-                        onClose={handleDialogClose}
-                        children={
-                            <DeleteMovieForm
-                                onConfirmClick={()=>{}}
-                            ></DeleteMovieForm>
+                    <Outlet context={
+                        {
+                            title: `delete movie`.toUpperCase(),
+                            children: <DeleteMovieForm onConfirmClick={onDelete}></DeleteMovieForm>,
+                            onClose: handleDialogClose,
                         }
-                    ></Dialog>
+                    }/>
                 )
             }
         </div>
