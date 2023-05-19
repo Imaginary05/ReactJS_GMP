@@ -1,26 +1,26 @@
-import React from 'react';
-import GenreSelect from '../GenreSelect/GenreSelect';
-import SortControl from '../SortControl/SortControl';
-import './FilterPanel.css';
+import React from 'react'
+import GenreSelect from '../GenreSelect/GenreSelect'
+import SortControl from '../SortControl/SortControl'
+import './FilterPanel.css'
 
 export interface FilterPanelProps {
-    genres: Array<string>;
-    sortOptions: Array<string>;
-    activeGenre: string;
-    sortCriterion: string
-    onGenreSelect: (genre: string) => void;
-    onSortByOptionSelect: (criterion: string) => void;
+  genres: string[]
+  sortOptions: string[]
+  activeGenre: string
+  sortCriterion: string
+  onGenreSelect: (genre: string) => void
+  onSortByOptionSelect: (criterion: string) => void
 }
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
-    genres,
-    sortOptions,
-    activeGenre,
-    sortCriterion,
-    onGenreSelect,
-    onSortByOptionSelect,
+  genres,
+  sortOptions,
+  activeGenre,
+  sortCriterion,
+  onGenreSelect,
+  onSortByOptionSelect
 }) => {
-    return (
+  return (
         <div className='navigation'>
             <nav className='filters'>
                 <GenreSelect
@@ -36,7 +36,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             </nav>
             <hr/>
         </div>
-    )
-};
+  )
+}
 
-export default FilterPanel;
+export default FilterPanel

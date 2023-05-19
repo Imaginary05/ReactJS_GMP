@@ -1,165 +1,164 @@
 import React, {
-    useEffect,
-    useState
-} from 'react';
-import MovieTile from '../MovieTile/MovieTile';
-import './MovieListPage.css';
-import MovieForm from '../MovieForm/MovieForm';
-import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm';
-import Fetch from '../../../services/fetch';
-import Movie, { MovieData } from '../movie';
-import SearchForm from '../../SearchForm/SearchForm';
-import FilterPanel from '../../Filtering/FilterPanel/FilterPanel';
-import { genres } from '../../../data/genres-list';
-import { options } from '../../../data/sort-options';
+  useEffect,
+  useState
+} from 'react'
+import MovieTile from '../MovieTile/MovieTile'
+import './MovieListPage.css'
+import MovieForm from '../MovieForm/MovieForm'
+import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm'
+import Fetch from '../../../services/fetch'
+import Movie, { type MovieData } from '../movie'
+import SearchForm from '../../SearchForm/SearchForm'
+import FilterPanel from '../../Filtering/FilterPanel/FilterPanel'
+import { genres } from '../../../data/genres-list'
+import { options } from '../../../data/sort-options'
 import {
-    Outlet,
-    useLocation,
-    useNavigate,
-    useSearchParams
-} from 'react-router-dom';
-import queryString from 'query-string';
-import MovieDetails from '../MovieDetails/MovieDetails';
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom'
+import queryString from 'query-string'
+import MovieDetails from '../MovieDetails/MovieDetails'
 
 const MovieListPage: React.FC = () => {
-    const [query] = useSearchParams();
+  const [query] = useSearchParams()
 
-    const [searchQuery, setSearchQuery] = useState(query.get('search') || '');
-    const [sortCriterion, setSortCriterion] = useState(query.get('sortBy') || options[0]);
-    const [activeGenre, setActiveGenre] = useState(query.get('genre') || genres[0] );
+  const [searchQuery, setSearchQuery] = useState(query.get('search') || '')
+  const [sortCriterion, setSortCriterion] = useState(query.get('sortBy') || options[0])
+  const [activeGenre, setActiveGenre] = useState(query.get('genre') || genres[0])
 
-    const [movieList, setMovieList] = useState(([] as Movie[]));
-    const [selectedMovie, setSelectedMovie] = useState(({} as Movie));
+  const [movieList, setMovieList] = useState(([] as Movie[]))
+  const [selectedMovie, setSelectedMovie] = useState(({} as Movie))
 
-    const [showDetailsMovieDialog, setShowDetailsMovieDialog] = useState(false);
-    const [showEditMovieDialog, setShowEditMovieDialog] = useState(false);
+  const [showDetailsMovieDialog, setShowDetailsMovieDialog] = useState(false)
+  const [showEditMovieDialog, setShowEditMovieDialog] = useState(false)
 
-    const [showDeleteMovieDialog, setShowDeleteMovieDialog] = useState(false);
-    const [deletedMovieCount, setDeletedMovieCount] = useState(0);
+  const [showDeleteMovieDialog, setShowDeleteMovieDialog] = useState(false)
+  const [deletedMovieCount, setDeletedMovieCount] = useState(0)
 
-    const [showAddMovieDialog, setShowAddMovieDialog] = useState(false);
+  const [showAddMovieDialog, setShowAddMovieDialog] = useState(false)
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const queryParams = queryString.parse(location.search);
+  const navigate = useNavigate()
+  const location = useLocation()
+  const queryParams = queryString.parse(location.search)
 
-    useEffect(() => {
-        let url = 'movies?';
+  useEffect(() => {
+    let url = 'movies?'
 
-        if (activeGenre && activeGenre !== genres[0]) {
-            url = `${url}&search=${activeGenre}&searchBy=genres`;
-        }
+    if (activeGenre && activeGenre !== genres[0]) {
+      url = `${url}&search=${activeGenre}&searchBy=genres`
+    }
 
-        if (sortCriterion && sortCriterion !== options[0]) {
-            const criterion = sortCriterion
-                .toLowerCase()
-                .replace(' ', '_');
+    if (sortCriterion && sortCriterion !== options[0]) {
+      const criterion = sortCriterion
+        .toLowerCase()
+        .replace(' ', '_')
 
-            url = `${url}&sortBy=${criterion}&sortOrder=asc`;
-        }
+      url = `${url}&sortBy=${criterion}&sortOrder=asc`
+    }
 
-        if (searchQuery) {
-            url = `${url}&search=${searchQuery}&searchBy=title`;
-        }
+    if (searchQuery) {
+      url = `${url}&search=${searchQuery}&searchBy=title`
+    }
 
-        url = url.includes('?&')
-            ? url.replace('?&', '?')
-            : 'movies';
+    url = url.includes('?&')
+      ? url.replace('?&', '?')
+      : 'movies'
 
-        Fetch(url).then(
+    Fetch(url).then(
+      (response: any) => {
+        const data: Movie[] = response.data.map(
+          (movie: MovieData) => new Movie(movie)
+        )
+
+        setMovieList(data)
+
+        const movieId = location.pathname.split('/')[2]
+
+        if (movieId) {
+          Fetch(`movies/${movieId}`).then(
             (response: any) => {
-                const data: Movie[] = response.data.map(
-                    (movie: MovieData) => new Movie(movie)
-                );
+              const selectedMovie = new Movie(response)
 
-                setMovieList(data);
-
-                const movieId = location.pathname.split('/')[2];
-
-                if (movieId) {
-                    Fetch(`movies/${movieId}`).then(
-                        (response: any) => {
-                            let selectedMovie = new Movie(response);
-
-                            if (location.pathname.includes('movies')) {
-                                handleTileClick(selectedMovie);
-
-                            } else {
-                                handleEditClick(selectedMovie)
-                            }
-                        }
-                    )
-                } if(location.pathname.includes('new')) {
-                    handleAddMovie();
-                }
+              if (location.pathname.includes('movies')) {
+                handleTileClick(selectedMovie)
+              } else {
+                handleEditClick(selectedMovie)
+              }
             }
-        );
-    }, [activeGenre, sortCriterion, searchQuery, deletedMovieCount]);
+          )
+        } if (location.pathname.includes('new')) {
+          handleAddMovie()
+        }
+      }
+    )
+  }, [activeGenre, sortCriterion, searchQuery, deletedMovieCount])
 
-    const onDelete = () => {
-        let movieId = location.pathname.split('/')[2];
+  const onDelete = (): void => {
+    const movieId = location.pathname.split('/')[2]
 
-        Fetch(`movies/${movieId}`, {
-            method: 'DELETE'
-        });
+    Fetch(`movies/${movieId}`, {
+      method: 'DELETE'
+    })
 
-        handleDialogClose();
-        setDeletedMovieCount(deletedMovieCount + 1);
-    }
+    handleDialogClose()
+    setDeletedMovieCount(deletedMovieCount + 1)
+  }
 
-    const handleFormSubmit = () => {
-        handleDialogClose();
-    }
+  const handleFormSubmit = (): void => {
+    handleDialogClose()
+  }
 
-    const handleAddMovie = () => {
-        setShowAddMovieDialog(true);
-        navigate(`new/${location.search}`);
-    }
+  const handleAddMovie = (): void => {
+    setShowAddMovieDialog(true)
+    navigate(`new/${location.search}`)
+  }
 
-    const handleDialogClose = () => {
-        setShowDetailsMovieDialog(false);
-        setShowEditMovieDialog(false);
-        setShowDeleteMovieDialog(false);
-        setShowAddMovieDialog(false);
-        navigate(`/${location.search}`);
-    }
+  const handleDialogClose = (): void => {
+    setShowDetailsMovieDialog(false)
+    setShowEditMovieDialog(false)
+    setShowDeleteMovieDialog(false)
+    setShowAddMovieDialog(false)
+    navigate(`/${location.search}`)
+  }
 
-    const handleTileClick = (movie: Movie) => {
-        setSelectedMovie(movie);
-        setShowDetailsMovieDialog(true);
-        navigate(`movies/${movie.id}${location.search}`);
-    };
+  const handleTileClick = (movie: Movie): void => {
+    setSelectedMovie(movie)
+    setShowDetailsMovieDialog(true)
+    navigate(`movies/${movie.id}${location.search}`)
+  }
 
-    const handleEditClick = (movie: Movie) => {
-        setSelectedMovie(movie);
-        setShowEditMovieDialog(true);
-        navigate(`edit/${movie.id}/${location.search}`);
-    };
+  const handleEditClick = (movie: Movie): void => {
+    setSelectedMovie(movie)
+    setShowEditMovieDialog(true)
+    navigate(`edit/${movie.id}/${location.search}`)
+  }
 
-    const handleDeleteClick = (movie: Movie) => {
-        setShowDeleteMovieDialog(true);
-        navigate(`delete/${movie.id}/${location.search}`);
-    };
+  const handleDeleteClick = (movie: Movie): void => {
+    setShowDeleteMovieDialog(true)
+    navigate(`delete/${movie.id}/${location.search}`)
+  }
 
-    const handleSearch = (search: string) => {
-        const newQueryParams = { ...queryParams, search };
-        navigate(`?${queryString.stringify(newQueryParams)}`);
-        setSearchQuery(search);
-    };
+  const handleSearch = (search: string): void => {
+    const newQueryParams = { ...queryParams, search }
+    navigate(`?${queryString.stringify(newQueryParams)}`)
+    setSearchQuery(search)
+  }
 
-    const handleGenreSelect = (genre: string) => {
-        const newQueryParams = { ...queryParams, genre };
-        navigate(`?${queryString.stringify(newQueryParams)}`);
-        setActiveGenre(genre);
-    }
+  const handleGenreSelect = (genre: string): void => {
+    const newQueryParams = { ...queryParams, genre }
+    navigate(`?${queryString.stringify(newQueryParams)}`)
+    setActiveGenre(genre)
+  }
 
-    const handleSortCriterionSelect = (sortBy: string) => {
-        const newQueryParams = { ...queryParams, sortBy };
-        navigate(`?${queryString.stringify(newQueryParams)}`);
-        setSortCriterion(sortBy);
-    }
+  const handleSortCriterionSelect = (sortBy: string): void => {
+    const newQueryParams = { ...queryParams, sortBy }
+    navigate(`?${queryString.stringify(newQueryParams)}`)
+    setSortCriterion(sortBy)
+  }
 
-    return (
+  return (
         <div className="movie-list-page" data-testid='MovieListPage'>
             <header className='header'>
                 <button
@@ -186,9 +185,9 @@ const MovieListPage: React.FC = () => {
                         movieList.map((movie: Movie) =>
                            <MovieTile
                                movie={movie}
-                               onTileClick={() => handleTileClick(movie)}
-                               onEditClick={() => handleEditClick(movie)}
-                               onDeleteClick={() => handleDeleteClick(movie)}
+                               onTileClick={() => { handleTileClick(movie) }}
+                               onEditClick={() => { handleEditClick(movie) }}
+                               onDeleteClick={() => { handleDeleteClick(movie) }}
                                key={movie.title}
                            ></MovieTile>
                         )
@@ -211,9 +210,9 @@ const MovieListPage: React.FC = () => {
                 showAddMovieDialog && (
                     <Outlet context={
                         {
-                            title: `add movie`.toUpperCase(),
-                            children: <MovieForm onFormSubmit={handleFormSubmit}></MovieForm>,
-                            onClose: handleDialogClose,
+                          title: 'add movie'.toUpperCase(),
+                          children: <MovieForm onFormSubmit={handleFormSubmit}></MovieForm>,
+                          onClose: handleDialogClose
                         }
                     }/>
                 )
@@ -222,9 +221,9 @@ const MovieListPage: React.FC = () => {
                 showDetailsMovieDialog && (
                     <Outlet context={
                         {
-                            title: '',
-                            children: <MovieDetails movie={selectedMovie}></MovieDetails>,
-                            onClose: handleDialogClose,
+                          title: '',
+                          children: <MovieDetails movie={selectedMovie}></MovieDetails>,
+                          onClose: handleDialogClose
                         }
                     }/>
                 )
@@ -233,9 +232,9 @@ const MovieListPage: React.FC = () => {
                 showEditMovieDialog && (
                     <Outlet context={
                         {
-                            title: `edit movie`.toUpperCase(),
-                            children: <MovieForm movie={selectedMovie} onFormSubmit={handleFormSubmit}></MovieForm>,
-                            onClose: handleDialogClose,
+                          title: 'edit movie'.toUpperCase(),
+                          children: <MovieForm movie={selectedMovie} onFormSubmit={handleFormSubmit}></MovieForm>,
+                          onClose: handleDialogClose
                         }
                     }/>
                 )
@@ -244,15 +243,15 @@ const MovieListPage: React.FC = () => {
                 showDeleteMovieDialog && (
                     <Outlet context={
                         {
-                            title: `delete movie`.toUpperCase(),
-                            children: <DeleteMovieForm onConfirmClick={onDelete}></DeleteMovieForm>,
-                            onClose: handleDialogClose,
+                          title: 'delete movie'.toUpperCase(),
+                          children: <DeleteMovieForm onConfirmClick={onDelete}></DeleteMovieForm>,
+                          onClose: handleDialogClose
                         }
                     }/>
                 )
             }
         </div>
-    )
-};
+  )
+}
 
-export default MovieListPage;
+export default MovieListPage

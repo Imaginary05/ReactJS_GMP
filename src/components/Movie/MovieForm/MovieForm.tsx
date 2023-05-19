@@ -1,87 +1,86 @@
-import React, { useState } from 'react';
-import './MovieForm.css';
-import { genres } from '../../../data/genres-list';
-import Button from '../../../common/Button/Button';
-import Movie from '../movie';
-import { useForm } from 'react-hook-form';
-import Fetch from '../../../services/fetch';
+import React, { useState } from 'react'
+import './MovieForm.css'
+import { genres } from '../../../data/genres-list'
+import Button from '../../../common/Button/Button'
+import type Movie from '../movie'
+import { useForm } from 'react-hook-form'
+import Fetch from '../../../services/fetch'
 
-export type MovieFormProps = {
-    movie?: Movie;
-    onFormSubmit: () => void;
-};
+export interface MovieFormProps {
+  movie?: Movie
+  onFormSubmit: () => void
+}
 
 const MovieForm: React.FC<MovieFormProps> = ({
-    movie,
-    onFormSubmit,
+  movie,
+  onFormSubmit
 }) => {
-    const defaultMovie = {} as Movie;
-    const [initialMovie, setMovie] = useState(!!movie ? movie : defaultMovie);
-    const [editedMovie, setEditedMovie] = useState(!!movie ? movie : defaultMovie);
-    const [isEditMovie] = useState(!!movie);
+  const defaultMovie = {} as Movie
+  const [initialMovie, setMovie] = useState((movie != null) ? movie : defaultMovie)
+  const [editedMovie, setEditedMovie] = useState((movie != null) ? movie : defaultMovie)
+  const [isEditMovie] = useState(!(movie == null))
 
-    const { register, formState: { errors }, handleSubmit } = useForm({
-        defaultValues: {
-            // genres: editedMovie.genres ? editedMovie.genres[0] : genres[0],
-        },
-        values: {
-            title: editedMovie.title,
-            releaseDate: editedMovie.releaseDate,
-            posterPath: editedMovie.posterPath,
-            voteAverage: editedMovie.voteAverage,
-            genres: editedMovie.genres ? editedMovie.genres[0] : '',
-            duration: editedMovie.runtime,
-            overview: editedMovie.overview,
-        }
-    });
+  const { register, formState: { errors }, handleSubmit } = useForm({
+    defaultValues: {
+      // genres: editedMovie.genres ? editedMovie.genres[0] : genres[0],
+    },
+    values: {
+      title: editedMovie.title,
+      releaseDate: editedMovie.releaseDate,
+      posterPath: editedMovie.posterPath,
+      voteAverage: editedMovie.voteAverage,
+      genres: editedMovie.genres ? editedMovie.genres[0] : '',
+      duration: editedMovie.runtime,
+      overview: editedMovie.overview
+    }
+  })
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
 
-        if (!isEditMovie && name === 'duration') {
-            setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, runtime: Number(value) }));
-        } else {
-            setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, [name]: value }));
+    if (!isEditMovie && name === 'duration') {
+      setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, runtime: Number(value) }))
+    } else {
+      setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, [name]: value }))
+    }
+  }
 
-        }
-    };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value)
+    setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, genres: selectedGenres }))
+  }
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
-        setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, genres: selectedGenres }));
-    };
+  const handleOnSubmit = () => {
+    setMovie(editedMovie)
 
-    const handleOnSubmit = () => {
-        setMovie(editedMovie);
+    let movieData = {
+      title: editedMovie.title,
+      genres: editedMovie.genres,
+      runtime: editedMovie.runtime,
+      overview: editedMovie.overview,
+      poster_path: editedMovie.posterPath
+    } as Partial<Movie>
 
-        let movieData = {
-            title: editedMovie.title,
-            genres: editedMovie.genres,
-            runtime: editedMovie.runtime,
-            overview: editedMovie.overview,
-            poster_path: editedMovie.posterPath,
-        } as Partial<Movie>;
+    if (isEditMovie) {
+      movieData = {
+        ...movieData,
+        id: editedMovie.id
+      }
+    }
 
-        if (isEditMovie) {
-            movieData = {
-                ...movieData,
-                id: editedMovie.id
-            }
-        }
+    Fetch('movies', {
+      method: isEditMovie ? 'PUT' : 'POST',
+      body: JSON.stringify(movieData)
+    })
 
-        Fetch('movies', {
-            method: isEditMovie ? 'PUT' : 'POST',
-            body: JSON.stringify(movieData),
-        })
+    onFormSubmit()
+  }
 
-        onFormSubmit();
-    };
+  const handleReset = () => {
+    setEditedMovie(initialMovie)
+  }
 
-    const handleReset = () => {
-        setEditedMovie(initialMovie);
-    };
-
-    return (
+  return (
         <form
             className="edit-movie-form"
             // onSubmit={handleOnSubmit}>
@@ -93,15 +92,15 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         type="text"
                         id="title"
                         {...register(
-                            "title",
-                            {
-                                required: true,
-                                onChange: handleChange
-                            }
-                        )}  />
+                          'title',
+                          {
+                            required: true,
+                            onChange: handleChange
+                          }
+                        )} />
                     {
-                        errors.title?.type === 'required'
-                        && <p role="alert">Title is required</p>
+                        errors.title?.type === 'required' &&
+                        <p role="alert">Title is required</p>
                     }
                 </div>
                 <div className="movie-form__column">
@@ -110,10 +109,10 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         type="date"
                         id="releaseDate"
                         {...register(
-                            "releaseDate",
-                            {
-                                onChange: handleChange
-                            }
+                          'releaseDate',
+                          {
+                            onChange: handleChange
+                          }
                         )}
                     />
                 </div>
@@ -125,15 +124,15 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         type="url"
                         id="moviePath"
                         {...register(
-                            "posterPath",
-                            {
-                                required: true,
-                                onChange: handleChange
-                            }
+                          'posterPath',
+                          {
+                            required: true,
+                            onChange: handleChange
+                          }
                         )} />
                     {
-                        errors.posterPath?.type === 'required'
-                        && <p role="alert">Poster path is required</p>
+                        errors.posterPath?.type === 'required' &&
+                        <p role="alert">Poster path is required</p>
                     }
                 </div>
                 <div className="movie-form__column">
@@ -145,20 +144,20 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         max={10}
                         step={0.1}
                         {...register(
-                            "voteAverage",
-                            {
-                                min: 0,
-                                max: 10,
-                                onChange: handleChange
-                            }
-                        )}  />
+                          'voteAverage',
+                          {
+                            min: 0,
+                            max: 10,
+                            onChange: handleChange
+                          }
+                        )} />
                     {
-                        errors.voteAverage?.type === 'min'
-                        && <p role="alert">Min vote is 0</p>
+                        errors.voteAverage?.type === 'min' &&
+                        <p role="alert">Min vote is 0</p>
                     }
                     {
-                        errors.voteAverage?.type === 'max'
-                        && <p role="alert">Max vote is 10</p>
+                        errors.voteAverage?.type === 'max' &&
+                        <p role="alert">Max vote is 10</p>
                     }
                 </div>
             </div>
@@ -169,11 +168,11 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         id="genres"
                         className="movie-form__select"
                         {...register(
-                            "genres",
-                            {
-                                required: true,
-                                onChange: handleSelectChange
-                            }
+                          'genres',
+                          {
+                            required: true,
+                            onChange: handleSelectChange
+                          }
                         )}
                     >
                         {
@@ -186,8 +185,8 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         }
                     </select>
                     {
-                        errors.genres?.type === 'required'
-                        && <p role="alert">Genre is required</p>
+                        errors.genres?.type === 'required' &&
+                        <p role="alert">Genre is required</p>
                     }
                 </div>
                 <div className="movie-form__column">
@@ -199,17 +198,17 @@ const MovieForm: React.FC<MovieFormProps> = ({
                         max={300}
                         step={1}
                         {...register(
-                            "duration",
-                            {
-                                min: 0,
-                                max: 300,
-                                required: true,
-                                onChange: handleChange
-                            }
+                          'duration',
+                          {
+                            min: 0,
+                            max: 300,
+                            required: true,
+                            onChange: handleChange
+                          }
                         )} />
                     {
-                        errors.duration?.type === 'required'
-                        && <p role="alert">Runtime is required</p>
+                        errors.duration?.type === 'required' &&
+                        <p role="alert">Runtime is required</p>
                     }
                 </div>
             </div>
@@ -218,15 +217,15 @@ const MovieForm: React.FC<MovieFormProps> = ({
                 <textarea
                     id="overview"
                     {...register(
-                        "overview",
-                        {
-                            required: true,
-                            onChange: handleChange
-                        }
+                      'overview',
+                      {
+                        required: true,
+                        onChange: handleChange
+                      }
                     )} />
                 {
-                    errors.overview?.type === 'required'
-                    && <p role="alert">Overview is required</p>
+                    errors.overview?.type === 'required' &&
+                    <p role="alert">Overview is required</p>
                 }
             </div>
             <div className="movie-form__buttons">
@@ -242,7 +241,7 @@ const MovieForm: React.FC<MovieFormProps> = ({
                 ></Button>
             </div>
         </form>
-    );
-};
+  )
+}
 
-export default MovieForm;
+export default MovieForm

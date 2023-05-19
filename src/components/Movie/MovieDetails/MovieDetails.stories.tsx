@@ -1,16 +1,16 @@
-import React from "react";
-import { Story, Meta } from "@storybook/react";
-import MovieDetails, { MovieDetailsProps } from "./MovieDetails";
-import { movies } from '../../../data/movies';
+import React from 'react'
+import { type Story, type Meta } from '@storybook/react'
+import MovieDetails, { type MovieDetailsProps } from './MovieDetails'
+import { movies } from '../../../data/movies'
 
 export default {
-    title: "Components/MovieDetails",
-    component: MovieDetails,
-} as Meta;
+  title: 'Components/MovieDetails',
+  component: MovieDetails
+} as Meta
 
-const Template: Story<MovieDetailsProps> = (args) => <MovieDetails {...args} />;
+const Template: Story<MovieDetailsProps> = (args) => <MovieDetails {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-    movie: movies[0],
-};
+  movie: movies[0]
+}

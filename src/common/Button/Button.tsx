@@ -1,18 +1,18 @@
-import './Button.css';
-import React from 'react';
+import './Button.css'
+import React from 'react'
 
 export interface ButtonProps {
-    type?: "button" | "reset" | "submit" | undefined;
-    title: string;
-    onClick: (e: any) => void;
+  type?: 'button' | 'reset' | 'submit' | undefined
+  title: string
+  onClick: (e: any) => void
 }
 
 const Button: React.FC<ButtonProps> = ({
-    type = 'button',
-    title,
-    onClick
+  type = 'button',
+  title,
+  onClick
 }) => {
-    return (
+  return (
         <button
             type={type}
             className='button'
@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
         >
             {title}
         </button>
-    );
+  )
 }
 
-export default Button;
+export default Button

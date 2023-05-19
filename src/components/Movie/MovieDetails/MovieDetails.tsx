@@ -4,18 +4,17 @@
 // movie name, release year, voteAverage, duration and a overview.
 // Alternatively, you can specify a single property that accepts an object with all movie info.
 import './MovieDetails.css'
-import React from "react";
-import Movie from '../movie';
+import React from 'react'
+import type Movie from '../movie'
 
-export type MovieDetailsProps = {
-    movie: Movie;
-};
+export interface MovieDetailsProps {
+  movie: Movie
+}
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({
-    movie,
+  movie
 }) => {
-
-    return (
+  return (
         <div className="movie-details" data-testid='movie-details'>
             <div className="movie-details__poster">
                 <img src={movie.posterPath} alt={movie.title} />
@@ -43,7 +42,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({
                 <div className="movie-details__overview">{movie.overview}</div>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default MovieDetails;
+export default MovieDetails

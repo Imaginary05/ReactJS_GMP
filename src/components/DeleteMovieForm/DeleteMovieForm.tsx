@@ -1,15 +1,15 @@
-import Button from '../../common/Button/Button';
-import React from 'react';
-import './DeleteMovieForm.css';
+import Button from '../../common/Button/Button'
+import React from 'react'
+import './DeleteMovieForm.css'
 
 export interface DeleteMovieFormProps {
-    onConfirmClick: () => void;
+  onConfirmClick: () => void
 }
 
 const DeleteMovieForm: React.FC<DeleteMovieFormProps> = ({
-    onConfirmClick,
+  onConfirmClick
 }) => {
-    return (
+  return (
         <>
             <div>
                 <span>Are you sure you want to delete this movie?</span>
@@ -21,7 +21,7 @@ const DeleteMovieForm: React.FC<DeleteMovieFormProps> = ({
                 ></Button>
             </div>
         </>
-    )
+  )
 }
 
-export default DeleteMovieForm;
+export default DeleteMovieForm

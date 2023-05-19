@@ -1,10 +1,10 @@
-import './App.css';
-import MovieListPage from './components/Movie/MovieListPage/MovieListPage';
+import './App.css'
+import MovieListPage from './components/Movie/MovieListPage/MovieListPage'
 
-function App() {
-    return (
+function App (): JSX.Element {
+  return (
         <MovieListPage></MovieListPage>
-    );
+  )
 }
 
-export default App;
+export default App
