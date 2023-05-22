@@ -35,6 +35,7 @@ const SortControl: React.FC<SortControlProps> = ({
             <select
                 className='sort-select'
                 id="sort-select"
+                data-testid="sort-by-select"
                 value={selectedOption}
                 onChange={handleOptionChange}
             >

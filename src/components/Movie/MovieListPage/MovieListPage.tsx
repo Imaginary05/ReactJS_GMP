@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import MovieTile from '../MovieTile/MovieTile';
 import './MovieListPage.css';
-import MovieDetails from '../MovieDetails/MovieDetails';
 import Dialog from '../../Dialog/Dialog';
 import MovieForm from '../MovieForm/MovieForm';
 import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm';
@@ -14,11 +13,20 @@ import SearchForm from '../../SearchForm/SearchForm';
 import FilterPanel from '../../Filtering/FilterPanel/FilterPanel';
 import { genres } from '../../../data/genres-list';
 import { options } from '../../../data/sort-options';
+import {
+    Outlet,
+    useLocation,
+    useNavigate,
+    useSearchParams
+} from 'react-router-dom';
+import queryString from 'query-string';
 
 const MovieListPage: React.FC = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [sortCriterion, setSortCriterion] = useState(options[0]);
-    const [activeGenre, setActiveGenre] = useState(genres[0]);
+    const [query] = useSearchParams();
+
+    const [searchQuery, setSearchQuery] = useState(query.get('search') || '');
+    const [sortCriterion, setSortCriterion] = useState(query.get('sortBy') || options[0]);
+    const [activeGenre, setActiveGenre] = useState(query.get('genre') || genres[0] );
 
     const [movieList, setMovieList] = useState(([] as Movie[]));
     const [selectedMovie, setSelectedMovie] = useState(({} as Movie));
@@ -28,6 +36,10 @@ const MovieListPage: React.FC = () => {
 
     const [showDeleteMovieDialog, setShowDeleteMovieDialog] = useState(false);
     const [showAddMovieDialog, setShowAddMovieDialog] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = queryString.parse(location.search);
 
     useEffect(() => {
         let url = 'movies?';
@@ -55,29 +67,23 @@ const MovieListPage: React.FC = () => {
         Fetch(url).then(
             (response: any) => {
                 const data: Movie[] = response.data.map(
-                    (movie: MovieData) => new Movie(
-                        movie.id,
-                        movie.title,
-                        movie.vote_average,
-                        movie.release_date,
-                        movie.poster_path,
-                        movie.overview,
-                        movie.genres,
-                        movie.runtime,
-                        movie.tagline,
-                        movie.vote_count,
-                        movie.budget,
-                        movie.revenue,
-                    )
+                    (movie: MovieData) => new Movie(movie)
                 );
                 setMovieList(data);
+
+                const movieId = location.pathname.split('/')[2];
+
+                if (movieId) {
+                    Fetch(`movies/${movieId}`).then(
+                        (response: any) => {
+                            let selectedMovie = new Movie(response);
+                            handleTileClick(selectedMovie);
+                        }
+                    )
+                }
             }
         );
     }, [activeGenre, sortCriterion, searchQuery]);
-
-    const handleSearch = (query: string) => {
-        setSearchQuery(query);
-    };
 
     const handleAddMovie = () => {
         setShowAddMovieDialog(true);
@@ -88,11 +94,13 @@ const MovieListPage: React.FC = () => {
         setShowEditMovieDialog(false);
         setShowDeleteMovieDialog(false);
         setShowAddMovieDialog(false);
+        navigate(`/${location.search}`);
     }
 
     const handleTileClick = (movie: Movie) => {
         setSelectedMovie(movie);
         setShowDetailsMovieDialog(true);
+        navigate(`movies/${movie.id}${location.search}`);
     };
 
     const handleEditClick = (movie: Movie) => {
@@ -101,16 +109,25 @@ const MovieListPage: React.FC = () => {
     };
 
     const handleDeleteClick = (movie: Movie) => {
-        setSelectedMovie(movie);
         setShowDeleteMovieDialog(true);
     };
 
+    const handleSearch = (search: string) => {
+        const newQueryParams = { ...queryParams, search };
+        navigate(`?${queryString.stringify(newQueryParams)}`);
+        setSearchQuery(search);
+    };
+
     const handleGenreSelect = (genre: string) => {
+        const newQueryParams = { ...queryParams, genre };
+        navigate(`?${queryString.stringify(newQueryParams)}`);
         setActiveGenre(genre);
     }
 
-    const handleSortCriterionSelect = (criterion: string) => {
-        setSortCriterion(criterion);
+    const handleSortCriterionSelect = (sortBy: string) => {
+        const newQueryParams = { ...queryParams, sortBy };
+        navigate(`?${queryString.stringify(newQueryParams)}`);
+        setSortCriterion(sortBy);
     }
 
     return (
@@ -138,13 +155,13 @@ const MovieListPage: React.FC = () => {
                 <section className='movie-list'>
                     {
                         movieList.map((movie: Movie) =>
-                            <MovieTile
-                                movie={movie}
-                                onTileClick={() => handleTileClick(movie)}
-                                onEditClick={() => handleEditClick(movie)}
-                                onDeleteClick={() => handleDeleteClick(movie)}
-                                key={movie.title}
-                            ></MovieTile>
+                           <MovieTile
+                               movie={movie}
+                               onTileClick={() => handleTileClick(movie)}
+                               onEditClick={() => handleEditClick(movie)}
+                               onDeleteClick={() => handleDeleteClick(movie)}
+                               key={movie.title}
+                           ></MovieTile>
                         )
                     }
                     {
@@ -180,9 +197,7 @@ const MovieListPage: React.FC = () => {
                         title=''
                         onClose={handleDialogClose}
                         children={
-                            <MovieDetails
-                                movie={selectedMovie}
-                            ></MovieDetails>
+                            <Outlet />
                         }
                     ></Dialog>
                 )
