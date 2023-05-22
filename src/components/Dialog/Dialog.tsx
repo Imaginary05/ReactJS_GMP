@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import FocusTrap from 'focus-trap-react';
 import { MdClear } from 'react-icons/md';
 import './Dialog.css';
+import { useOutletContext } from 'react-router-dom';
 
 export interface DialogProps {
     title: string | JSX.Element;
@@ -10,17 +11,20 @@ export interface DialogProps {
     children: React.ReactNode;
 }
 
-const Dialog: React.FC<DialogProps> = ({
-    title,
-    onClose,
-    children
-}) => {
+const Dialog: React.FC = (
+    // {
+    // title,
+    // onClose,
+    // children
+    // }
+) => {
     const dialogContainer = useRef<HTMLDivElement | null>(null);
+    const props = useOutletContext<DialogProps>();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dialogContainer.current && !dialogContainer.current.contains(event.target as Node)) {
-                onClose();
+                props.onClose();
             }
         };
 
@@ -29,7 +33,7 @@ const Dialog: React.FC<DialogProps> = ({
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [onClose]);
+    }, [props]);
 
     return ReactDOM.createPortal(
         <FocusTrap focusTrapOptions={{
@@ -39,16 +43,16 @@ const Dialog: React.FC<DialogProps> = ({
                 <div className="dialog-wrapper" ref={dialogContainer}>
                     <div className='dialog-content'>
                         {
-                            title && (
-                                <h2 className="dialog-title">{title}</h2>
+                            props.title && (
+                                <h2 className="dialog-title">{props.title}</h2>
                             )
                         }
-                        <div className="dialog-body">{children}</div>
+                        <div className="dialog-body">{props.children}</div>
                     </div>
                     <button id="close" className='dialog-popup-close'>
                         <MdClear
                             data-testid='close-details'
-                            onClick={onClose}
+                            onClick={props.onClose}
                         ></MdClear>
                     </button>
                 </div>

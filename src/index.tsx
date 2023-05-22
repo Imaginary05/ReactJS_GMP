@@ -8,9 +8,7 @@ import {
     RouterProvider
 } from 'react-router-dom';
 import ErrorPage from './common/ErrorPage/ErrorPage';
-import Movie from './components/Movie/movie';
-import Fetch from './services/fetch';
-import MovieLoader from './common/DataLoader/MovieLoader';
+import Dialog from './components/Dialog/Dialog';
 
 const router = createBrowserRouter([
     {
@@ -20,14 +18,26 @@ const router = createBrowserRouter([
         children: [
             {
                 path: 'movies/:movieId',
-                loader:  async ({ params }) => {
-                    return Fetch<Movie>(`movies/${params.movieId}`)
-                        .then(
-                            (movie: any) => new Movie(movie)
-                        );
-                },
-                element: <MovieLoader></MovieLoader>
-            }
+                // loader:  async ({ params }) => {
+                //     return Fetch<Movie>(`movies/${params.movieId}`)
+                //         .then(
+                //             (movie: any) => new Movie(movie)
+                //         );
+                // },
+                element: <Dialog></Dialog>
+            },
+            {
+                path: 'new',
+                element: <Dialog></Dialog>
+            },
+            {
+                path: 'edit/:movieId',
+                element: <Dialog></Dialog>
+            },
+            {
+                path: 'delete/:movieId',
+                element: <Dialog></Dialog>
+            },
         ]
     },
 ]);

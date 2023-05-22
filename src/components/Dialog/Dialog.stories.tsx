@@ -11,9 +11,9 @@ export default {
 
 const Template: Story<DialogProps> = (args) => (
     <Dialog
-        title={args.title}
-        onClose={args.onClose}
-        children={args.children}
+        // title={args.title}
+        // onClose={args.onClose}
+        // children={args.children}
     ></Dialog>
 );
 

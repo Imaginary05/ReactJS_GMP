@@ -3,22 +3,47 @@ import './MovieForm.css';
 import { genres } from '../../../data/genres-list';
 import Button from '../../../common/Button/Button';
 import Movie from '../movie';
+import { useForm } from 'react-hook-form';
+import Fetch from '../../../services/fetch';
 
 export type MovieFormProps = {
     movie?: Movie;
-    onSubmit: (movie: Movie) => void;
+    onFormSubmit: () => void;
 };
 
 const MovieForm: React.FC<MovieFormProps> = ({
-    movie= ({} as Movie),
-    onSubmit,
+    movie,
+    onFormSubmit,
 }) => {
-    const [initialMovie, setMovie] = useState(movie);
-    const [editedMovie, setEditedMovie] = useState(movie);
+    const defaultMovie = {} as Movie;
+    const [initialMovie, setMovie] = useState(!!movie ? movie : defaultMovie);
+    const [editedMovie, setEditedMovie] = useState(!!movie ? movie : defaultMovie);
+    const [isEditMovie] = useState(!!movie);
+
+    const { register, formState: { errors }, handleSubmit } = useForm({
+        defaultValues: {
+            // genres: editedMovie.genres ? editedMovie.genres[0] : genres[0],
+        },
+        values: {
+            title: editedMovie.title,
+            releaseDate: editedMovie.releaseDate,
+            posterPath: editedMovie.posterPath,
+            voteAverage: editedMovie.voteAverage,
+            genres: editedMovie.genres ? editedMovie.genres[0] : '',
+            duration: editedMovie.runtime,
+            overview: editedMovie.overview,
+        }
+    });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, [name]: value }));
+
+        if (!isEditMovie && name === 'duration') {
+            setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, runtime: Number(value) }));
+        } else {
+            setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, [name]: value }));
+
+        }
     };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -26,12 +51,30 @@ const MovieForm: React.FC<MovieFormProps> = ({
         setEditedMovie((prevMovie: Movie) => ({ ...prevMovie, genres: selectedGenres }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const handleOnSubmit = () => {
         setMovie(editedMovie);
 
-        onSubmit(editedMovie);
+        let movieData = {
+            title: editedMovie.title,
+            genres: editedMovie.genres,
+            runtime: editedMovie.runtime,
+            overview: editedMovie.overview,
+            poster_path: editedMovie.posterPath,
+        } as Partial<Movie>;
+
+        if (isEditMovie) {
+            movieData = {
+                ...movieData,
+                id: editedMovie.id
+            }
+        }
+
+        Fetch('movies', {
+            method: isEditMovie ? 'PUT' : 'POST',
+            body: JSON.stringify(movieData),
+        })
+
+        onFormSubmit();
     };
 
     const handleReset = () => {
@@ -41,52 +84,82 @@ const MovieForm: React.FC<MovieFormProps> = ({
     return (
         <form
             className="edit-movie-form"
-            onSubmit={handleSubmit}>
+            // onSubmit={handleOnSubmit}>
+            onSubmit={handleSubmit(handleOnSubmit)}>
             <div className="movie-form__row">
                 <div className="movie-form__column">
                     <label htmlFor="title">Title</label>
                     <input
                         type="text"
                         id="title"
-                        name="title"
-                        value={editedMovie?.title}
-                        onChange={handleChange}
-                        required />
+                        {...register(
+                            "title",
+                            {
+                                required: true,
+                                onChange: handleChange
+                            }
+                        )}  />
+                    {
+                        errors.title?.type === 'required'
+                        && <p role="alert">Title is required</p>
+                    }
                 </div>
                 <div className="movie-form__column">
                     <label htmlFor="releaseDate">Release Date</label>
                     <input
                         type="date"
                         id="releaseDate"
-                        name="releaseDate"
-                        value={editedMovie?.releaseDate}
-                        onChange={handleChange}
-                        required />
+                        {...register(
+                            "releaseDate",
+                            {
+                                onChange: handleChange
+                            }
+                        )}
+                    />
                 </div>
             </div>
             <div className="movie-form__row">
                 <div className="movie-form__column">
-                    <label htmlFor="moviePath">Movie URL</label>
+                    <label htmlFor="moviePath">Poster path</label>
                     <input
                         type="url"
                         id="moviePath"
-                        name="posterPath"
-                        value={editedMovie?.posterPath}
-                        onChange={handleChange}
-                        required />
+                        {...register(
+                            "posterPath",
+                            {
+                                required: true,
+                                onChange: handleChange
+                            }
+                        )} />
+                    {
+                        errors.posterPath?.type === 'required'
+                        && <p role="alert">Poster path is required</p>
+                    }
                 </div>
                 <div className="movie-form__column">
                     <label htmlFor="voteAverage">voteAverage</label>
                     <input
                         type="number"
                         id="voteAverage"
-                        name="voteAverage"
-                        value={editedMovie?.voteAverage}
-                        onChange={handleChange}
                         min={0}
                         max={10}
                         step={0.1}
-                        required />
+                        {...register(
+                            "voteAverage",
+                            {
+                                min: 0,
+                                max: 10,
+                                onChange: handleChange
+                            }
+                        )}  />
+                    {
+                        errors.voteAverage?.type === 'min'
+                        && <p role="alert">Min vote is 0</p>
+                    }
+                    {
+                        errors.voteAverage?.type === 'max'
+                        && <p role="alert">Max vote is 10</p>
+                    }
                 </div>
             </div>
             <div className="movie-form__row">
@@ -94,11 +167,14 @@ const MovieForm: React.FC<MovieFormProps> = ({
                     <label htmlFor="genres">Genres</label>
                     <select
                         id="genres"
-                        name="genres"
                         className="movie-form__select"
-                        defaultValue={editedMovie.genres ? editedMovie.genres[0] : genres[0]}
-                        onChange={handleSelectChange}
-                        required
+                        {...register(
+                            "genres",
+                            {
+                                required: true,
+                                onChange: handleSelectChange
+                            }
+                        )}
                     >
                         {
                             genres.map((genre: string) =>
@@ -109,29 +185,49 @@ const MovieForm: React.FC<MovieFormProps> = ({
                             )
                         }
                     </select>
+                    {
+                        errors.genres?.type === 'required'
+                        && <p role="alert">Genre is required</p>
+                    }
                 </div>
                 <div className="movie-form__column">
                     <label htmlFor="duration">Runtime</label>
                     <input
                         type="number"
                         id="duration"
-                        name="duration"
-                        value={editedMovie?.runtime}
-                        onChange={handleChange}
                         min={0}
-                        max={500}
+                        max={300}
                         step={1}
-                        required />
+                        {...register(
+                            "duration",
+                            {
+                                min: 0,
+                                max: 300,
+                                required: true,
+                                onChange: handleChange
+                            }
+                        )} />
+                    {
+                        errors.duration?.type === 'required'
+                        && <p role="alert">Runtime is required</p>
+                    }
                 </div>
             </div>
             <div className="movie-form__column">
                 <label htmlFor="overview">Overview</label>
                 <textarea
                     id="overview"
-                    name="overview"
-                    value={editedMovie?.overview}
-                    onChange={handleChange}
-                    required />
+                    {...register(
+                        "overview",
+                        {
+                            required: true,
+                            onChange: handleChange
+                        }
+                    )} />
+                {
+                    errors.overview?.type === 'required'
+                    && <p role="alert">Overview is required</p>
+                }
             </div>
             <div className="movie-form__buttons">
                 <Button

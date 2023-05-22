@@ -13,11 +13,9 @@ const Template: Story<MovieFormProps> = (args) => <MovieForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    onSubmit: (formData: Movie) => console.log(formData),
 };
 
 export const WithInitialValues = Template.bind({});
 WithInitialValues.args = {
     movie: movies[0],
-    onSubmit: (formData: Movie) => console.log(formData),
 };
