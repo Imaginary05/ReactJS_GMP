@@ -7,7 +7,7 @@ import './MovieListPage.css'
 import MovieForm from '../MovieForm/MovieForm'
 import DeleteMovieForm from '../../DeleteMovieForm/DeleteMovieForm'
 import Fetch from '../../../services/fetch'
-import Movie, { type MovieData } from '../movie'
+import { Movie, type MovieData } from '../movie'
 import SearchForm from '../../SearchForm/SearchForm'
 import FilterPanel from '../../Filtering/FilterPanel/FilterPanel'
 import { genres } from '../../../data/genres-list'
@@ -46,11 +46,11 @@ const MovieListPage: React.FC = () => {
   useEffect(() => {
     let url = 'movies?'
 
-    if (activeGenre && activeGenre !== genres[0]) {
+    if ((activeGenre !== '') && activeGenre !== genres[0]) {
       url = `${url}&search=${activeGenre}&searchBy=genres`
     }
 
-    if (sortCriterion && sortCriterion !== options[0]) {
+    if ((sortCriterion !== '') && sortCriterion !== options[0]) {
       const criterion = sortCriterion
         .toLowerCase()
         .replace(' ', '_')
@@ -58,7 +58,7 @@ const MovieListPage: React.FC = () => {
       url = `${url}&sortBy=${criterion}&sortOrder=asc`
     }
 
-    if (searchQuery) {
+    if (searchQuery !== '') {
       url = `${url}&search=${searchQuery}&searchBy=title`
     }
 
@@ -66,7 +66,7 @@ const MovieListPage: React.FC = () => {
       ? url.replace('?&', '?')
       : 'movies'
 
-    Fetch(url).then(
+    void Fetch(url).then(
       (response: any) => {
         const data: Movie[] = response.data.map(
           (movie: MovieData) => new Movie(movie)
@@ -76,8 +76,8 @@ const MovieListPage: React.FC = () => {
 
         const movieId = location.pathname.split('/')[2]
 
-        if (movieId) {
-          Fetch(`movies/${movieId}`).then(
+        if (movieId !== '') {
+          void Fetch(`movies/${movieId}`).then(
             (response: any) => {
               const selectedMovie = new Movie(response)
 
@@ -98,7 +98,7 @@ const MovieListPage: React.FC = () => {
   const onDelete = (): void => {
     const movieId = location.pathname.split('/')[2]
 
-    Fetch(`movies/${movieId}`, {
+    void Fetch(`movies/${movieId}`, {
       method: 'DELETE'
     })
 

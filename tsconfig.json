@@ -19,9 +19,20 @@
     "isolatedModules": true,
     "noEmitOnError": false,
     "emitDeclarationOnly": false,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "noEmit": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
-    "src"
+    "src",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

@@ -1,0 +1,88 @@
+.movie-tile {
+    margin: 30px;
+}
+
+.movie-tile-image {
+    width: 300px;
+    height: 450px;
+    min-width: 300px;
+    min-height: 450px;
+}
+
+.movie-tile-details {
+    padding-top: 10px;
+    color: #cccccc;
+    font-size: 1.25rem;
+}
+
+.movie-tile-details-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.movie-tile-genres {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:block;
+    width : 300px;
+}
+
+.movie-tile-menu {
+    display: flex;
+    align-self: flex-end;
+}
+
+.movie-tile-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+    width: 200px;
+}
+.movie-tile-release-date {
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px 25px;
+}
+
+.movie-tile-context-menu-button {
+    cursor: pointer;
+}
+
+.movie-tile-menu-popup {
+    position: absolute;
+    margin: -65px 0 0 -80px;
+    background: #282c34;
+    padding: 7px 0;
+    border: 1px solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-tile-menu-popup-close {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5px;
+}
+
+.menu-popup-close {
+    cursor: pointer;
+}
+
+.menu-popup-close:hover {
+    color: #F65261;
+}
+
+.movie-tile-menu-popup-button {
+    padding: 5px 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+button.movie-tile-menu-popup-button:hover {
+    background: #F65261;
+}

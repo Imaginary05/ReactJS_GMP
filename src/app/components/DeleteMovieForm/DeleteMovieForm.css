@@ -1,0 +1,7 @@
+.delete-movie-form__buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 30vw;
+    margin: 20px 0 0;
+
+}

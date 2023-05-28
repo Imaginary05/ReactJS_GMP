@@ -1,0 +1,59 @@
+/*
+* Refer to the design prototype, implement a component
+* that renders a list of movie genres with currently selected genre highlighted.
+* The component should accept three properties:
+* 1. A list of genre names to display.
+* Use the incoming list to render genre buttons.
+* 2. A name of currently selected genre.
+* Use the name to identify which button to highlight.
+* 3. A "onSelect" callback property.
+* Call the callback function when the user clicks on any genre button.
+* Pass respective genre name to the callback arguments.
+* */
+import React from 'react'
+import Link from 'next/link'
+
+export interface GenreSelectProps {
+  genres: string[]
+  selectedGenre: string
+  onSelect: (genre: string) => void
+}
+
+const GenreSelect: React.FC<GenreSelectProps> = ({
+  genres,
+  selectedGenre,
+  onSelect
+}) => {
+  return (
+        <div className='genres' data-testid='genre-select'>
+            {
+                genres.map((genre) =>
+                    <div
+                        className='genreContainer'
+                        key={genre}
+                    >
+                      <Link href={{
+                        pathname: 'movies',
+                        query: genre === genres[0]
+                          ? ''
+                          : {
+                              searchBy: 'genres',
+                              search: genre
+                            }
+                      }}>
+                        <button
+                            id={genre}
+                            className={`genre${genre === selectedGenre ? ' selected' : ''}`}
+                            onClick={() => { onSelect(genre) }}
+                        >
+                            {genre.toUpperCase()}
+                        </button>
+                      </Link>
+                    </div>
+                )
+            }
+        </div>
+  )
+}
+
+export default GenreSelect

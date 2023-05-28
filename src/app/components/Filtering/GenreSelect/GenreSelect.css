@@ -1,0 +1,24 @@
+.genres {
+    display: flex;
+    flex-direction: row;
+}
+
+.genreContainer {
+    padding-right: 30px;
+}
+
+.genre {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.genreSelection {
+    display: none;
+}
+
+.selected {
+    display: flex;
+    border-bottom: 2px solid red;
+ }
