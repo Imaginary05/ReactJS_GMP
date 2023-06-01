@@ -1,0 +1,13 @@
+hr {
+    margin-top: -2px;
+    /*border-width: 2px;*/
+}
+
+.navigation {
+    margin: 0 60px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+}
