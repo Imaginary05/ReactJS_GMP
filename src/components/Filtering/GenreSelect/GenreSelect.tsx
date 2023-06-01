@@ -11,21 +11,20 @@
 * Pass respective genre name to the callback arguments.
 * */
 import './GenreSelect.css'
-import React from 'react';
+import React from 'react'
 
 export interface GenreSelectProps {
-    genres: string[];
-    selectedGenre: string;
-    onSelect: (genre: string) => void;
+  genres: string[]
+  selectedGenre: string
+  onSelect: (genre: string) => void
 }
 
 const GenreSelect: React.FC<GenreSelectProps> = ({
-    genres,
-    selectedGenre,
-    onSelect,
+  genres,
+  selectedGenre,
+  onSelect
 }) => {
-
-    return (
+  return (
         <div className='genres' data-testid='genre-select'>
             {
                 genres.map((genre) =>
@@ -36,7 +35,7 @@ const GenreSelect: React.FC<GenreSelectProps> = ({
                         <button
                             id={genre}
                             className={`genre${genre === selectedGenre ? ' selected' : ''}`}
-                            onClick={() => onSelect(genre)}
+                            onClick={() => { onSelect(genre) }}
                         >
                             {genre.toUpperCase()}
                         </button>
@@ -44,7 +43,7 @@ const GenreSelect: React.FC<GenreSelectProps> = ({
                 )
             }
         </div>
-    )
+  )
 }
 
-export default GenreSelect;
+export default GenreSelect

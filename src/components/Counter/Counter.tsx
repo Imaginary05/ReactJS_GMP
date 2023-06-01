@@ -1,8 +1,8 @@
 import {
-    Component,
-    createElement
-} from 'react';
-import Button from '../../common/Button/Button';
+  Component,
+  createElement
+} from 'react'
+import Button from '../../common/Button/Button'
 
 /*
 * A component that renders a numeric value and two buttons:
@@ -11,55 +11,54 @@ import Button from '../../common/Button/Button';
 * The component should be written using EcmaScript classes syntax,
 * the `render` method should use `React.createElement` API (without JSX).
 * */
-export type CounterProps = {
-    initialCount: number;
-};
+export interface CounterProps {
+  initialCount: number
+}
 
 export default class Counter extends Component<any, any> {
-
-    constructor(props: CounterProps) {
-        super(props);
-        this.state = {
-            count: props.initialCount
-        }
+  constructor (props: CounterProps) {
+    super(props)
+    this.state = {
+      count: props.initialCount
     }
+  }
 
-    increment = () => {
-        this.setState({
-            count: this.state.count + 1
+  increment = (): void => {
+    this.setState({
+      count: this.state.count + 1
+    })
+  }
+
+  decrement = (): void => {
+    this.setState({
+      count: this.state.count - 1
+    })
+  }
+
+  render () {
+    return createElement(
+      'div',
+      {
+        className: 'counter'
+      },
+      [
+        createElement(
+          'p',
+          null,
+          'Count: ',
+          this.state.count
+        ),
+        createElement(Button, {
+          title: 'Increment',
+          type: 'button',
+          onClick: this.increment
+        }),
+        createElement(Button, {
+          title: 'Decrement',
+          type: 'button',
+          onClick: this.decrement
         })
-    }
-
-    decrement = () => {
-        this.setState({
-            count: this.state.count - 1
-        })
-    }
-
-    render() {
-        return createElement(
-            'div',
-            {
-                className: 'counter'
-            },
-            [
-                createElement(
-                    'p',
-                    null,
-                    "Count: ",
-                    this.state.count,
-                ),
-                createElement(Button, {
-                    title: 'Increment',
-                    type: 'button',
-                    onClick: this.increment
-                }),
-                createElement(Button, {
-                    title: 'Decrement',
-                    type: 'button',
-                    onClick: this.decrement
-                }),
-            ]
-        )
-    }
+      ]
+    )
+  }
 }

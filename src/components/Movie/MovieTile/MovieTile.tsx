@@ -1,41 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
-    MdClear,
-    MdMoreVert
-} from 'react-icons/md';
-import './MovieTile.css';
-import Movie from '../movie';
+  MdClear,
+  MdMoreVert
+} from 'react-icons/md'
+import './MovieTile.css'
+import type Movie from '../movie'
 
 export interface MovieTileProps {
-    movie: Movie;
-    onTileClick: (id: number) => void;
-    onEditClick: (id: number) => void;
-    onDeleteClick: (id: number) => void;
+  movie: Movie
+  onTileClick: (id: number) => void
+  onEditClick: (id: number) => void
+  onDeleteClick: (id: number) => void
 }
 
 const MovieTile: React.FC<MovieTileProps> = ({
-    movie,
-    onTileClick,
-    onEditClick,
-    onDeleteClick,
+  movie,
+  onTileClick,
+  onEditClick,
+  onDeleteClick
 }) => {
-    const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false)
 
-    const handleTileClick = () => {
-        onTileClick(movie.id);
-    };
+  const handleTileClick = (): void => {
+    onTileClick(movie.id)
+  }
 
-    const handleEditClick = () => {
-        onEditClick(movie.id);
-        setShowMenu(false);
-    };
+  const handleEditClick = (): void => {
+    onEditClick(movie.id)
+    setShowMenu(false)
+  }
 
-    const handleDeleteClick = () => {
-        onDeleteClick(movie.id);
-        setShowMenu(false);
-    };
+  const handleDeleteClick = (): void => {
+    onDeleteClick(movie.id)
+    setShowMenu(false)
+  }
 
-    return (
+  return (
         <div className="movie-tile">
             <div onClick={handleTileClick}>
                 <img className="movie-tile-image" src={movie.posterPath} alt={movie.title} />
@@ -55,7 +55,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
                     </div>
                     <div
                         className="movie-tile-menu"
-                        onClick={() => setShowMenu(!showMenu)}
+                        onClick={() => { setShowMenu(!showMenu) }}
                         data-testid='context-menu-button'
                     >
                         <MdMoreVert className='movie-tile-context-menu-button'></MdMoreVert>
@@ -67,7 +67,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
                                 <div className="movie-tile-menu-popup-close">
                                     <MdClear
                                         className='menu-popup-close'
-                                        onClick={() => setShowMenu(!showMenu)}
+                                        onClick={() => { setShowMenu(!showMenu) }}
                                     ></MdClear>
                                 </div>
                                 <button
@@ -84,7 +84,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
                 </div>
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default MovieTile;
+export default MovieTile

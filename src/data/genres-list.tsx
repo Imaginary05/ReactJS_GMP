@@ -1,7 +1,7 @@
 export const genres = [
-    'All',
-    'Documentary',
-    'Comedy',
-    'Horror',
-    'Crime',
+  'All',
+  'Documentary',
+  'Comedy',
+  'Horror',
+  'Crime'
 ]

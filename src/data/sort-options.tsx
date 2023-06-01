@@ -1,5 +1,5 @@
-export const options: Array<string> = [
-    'None',
-    'Release Date',
-    'Title',
-];
+export const options: string[] = [
+  'None',
+  'Release Date',
+  'Title'
+]

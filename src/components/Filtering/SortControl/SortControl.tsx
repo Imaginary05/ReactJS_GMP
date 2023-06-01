@@ -8,25 +8,25 @@
 // to handle selection changes.
 // The callback should be called every time a user changes "Sort by" value.
 // The new value should be passed in callback arguments.
-import './SortControl.css';
-import React from 'react';
+import './SortControl.css'
+import React from 'react'
 
 export interface SortControlProps {
-    options: Array<string>;
-    selectedOption: string;
-    onOptionChange: (option: string) => void;
+  options: string[]
+  selectedOption: string
+  onOptionChange: (option: string) => void
 }
 
 const SortControl: React.FC<SortControlProps> = ({
-    options,
-    selectedOption,
-    onOptionChange }) =>
-{
-    const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onOptionChange(event.target.value);
-    };
+  options,
+  selectedOption,
+  onOptionChange
+}) => {
+  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    onOptionChange(event.target.value)
+  }
 
-    return (
+  return (
         <div className='sort' data-testid='sort-control'>
             <label
                 className='sort-label'
@@ -47,7 +47,7 @@ const SortControl: React.FC<SortControlProps> = ({
                 ))}
             </select>
         </div>
-    );
-};
+  )
+}
 
-export default SortControl;
+export default SortControl

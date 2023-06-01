@@ -10,37 +10,37 @@
 * when the input has focus or when the user clicks the Search button.
 * Pass current input value in callback arguments.
 * */
-import './SearchForm.css';
-import Input from '../../common/Input/Input';
-import Button from '../../common/Button/Button';
-import React, { useState } from 'react';
+import './SearchForm.css'
+import Input from '../../common/Input/Input'
+import Button from '../../common/Button/Button'
+import React, { useState } from 'react'
 
 export interface SearchFormProps {
-    initialQuery: string;
-    onSearch: (query: string) => void;
+  initialQuery: string
+  onSearch: (query: string) => void
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
-    initialQuery,
-    onSearch,
+  initialQuery,
+  onSearch
 }) => {
-    const [query, setQuery] = useState(initialQuery);
+  const [query, setQuery] = useState(initialQuery)
 
-    const handleQueryChange = (value: string) => {
-        setQuery(value);
-    };
+  const handleQueryChange = (value: string): void => {
+    setQuery(value)
+  }
 
-    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleSearch();
-        }
-    };
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
 
-    const handleSearch = () => {
-        onSearch(query);
-    };
+  const handleSearch = (): void => {
+    onSearch(query)
+  }
 
-    return (
+  return (
        <div className='searchComponent'>
            <div className='searchText'>
                FIND YOUR MOVIE
@@ -58,7 +58,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                ></Button>
            </div>
        </div>
-    )
+  )
 }
 
-export default SearchForm;
+export default SearchForm

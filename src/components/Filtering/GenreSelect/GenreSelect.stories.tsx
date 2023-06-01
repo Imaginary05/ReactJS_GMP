@@ -1,41 +1,41 @@
-import GenreSelect, { GenreSelectProps } from './GenreSelect';
+import GenreSelect, { type GenreSelectProps } from './GenreSelect'
 import {
-    Meta,
-    Story
-} from '@storybook/react';
-import { useState } from 'react';
-import { genres } from '../../../data/genres-list';
+  type Meta,
+  type Story
+} from '@storybook/react'
+import { useState } from 'react'
+import { genres } from '../../../data/genres-list'
 
 export default {
-    title: "Components/GenreSelect",
-    component: GenreSelect,
-} as Meta;
+  title: 'Components/GenreSelect',
+  component: GenreSelect
+} as Meta
 
 const Template: Story<GenreSelectProps> = (args) => {
-    const [selectedGenre, setSelectedGenre] = useState(args.selectedGenre);
+  const [selectedGenre, setSelectedGenre] = useState(args.selectedGenre)
 
-    const handleChange = (genre: string) => {
-        setSelectedGenre(genre);
-        args.onSelect(genre);
-    };
+  const handleChange = (genre: string) => {
+    setSelectedGenre(genre)
+    args.onSelect(genre)
+  }
 
-    return (
+  return (
         <GenreSelect
             genres={genres}
             selectedGenre={selectedGenre}
             onSelect={handleChange}
         />
-    );
-};
+  )
+}
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-    genres,
-    selectedGenre: genres[0],
-};
+  genres,
+  selectedGenre: genres[0]
+}
 
-export const WithSelectedGenre = Template.bind({});
+export const WithSelectedGenre = Template.bind({})
 WithSelectedGenre.args = {
-    genres,
-    selectedGenre: genres[1],
-};
+  genres,
+  selectedGenre: genres[1]
+}
